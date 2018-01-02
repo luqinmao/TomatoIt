@@ -1,15 +1,24 @@
 package com.lqm.tomatoit.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import com.lqm.tomatoit.R;
+import com.lqm.tomatoit.ui.base.BaseActivity;
+import com.lqm.tomatoit.ui.base.BasePresenter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    protected int provideContentViewId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initView() {
+
+
     }
 }

@@ -19,15 +19,26 @@ import java.util.List;
 public class App extends Application {
 
     public static List<Activity> activities = new LinkedList<>();
-    public static Context CONTEXT;
+
+    private static Context mContext;//上下文
 
     @Override
     public void onCreate() {
         super.onCreate();
-        CONTEXT = this.getApplicationContext();
+        mContext = this.getApplicationContext();
+
 
         initOkGo();
+        initAutoLayout();
 
+    }
+
+    /**
+     * 配置AutoLayout
+     */
+    private void initAutoLayout() {
+        //默认使用的高度是设备的可用高度，也就是不包括状态栏和底部的操作栏的，以下配置可以拿到设备的物理高度进行百分比
+//        AutoLayoutConifg.getInstance().useDeviceSize();
     }
 
     /**
@@ -39,6 +50,10 @@ public class App extends Application {
                 .setCacheMode(CacheMode.NO_CACHE)
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
                 .setRetryCount(3);
+    }
+
+    public static Context getmContext() {
+        return mContext;
     }
 
     /**

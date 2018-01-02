@@ -3,7 +3,6 @@ package com.lqm.tomatoit.ui.base;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -11,11 +10,12 @@ import android.widget.TextView;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.app.App;
 import com.lqm.tomatoit.widget.CustomDialog;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.ButterKnife;
 
 
-public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCompatActivity {
+public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AutoLayoutActivity {
 
 
     protected T mPresenter;

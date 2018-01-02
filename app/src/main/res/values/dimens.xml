@@ -1,0 +1,41 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <!--文字大小-->
+
+    <dimen name="text_special_size">40px</dimen><!--40px以上-->
+    <dimen name="text_big_size">36px</dimen><!--32-36-->
+    <dimen name="text_medium_size">28px</dimen><!--24-32-->
+    <dimen name="text_small_size">20px</dimen><!--16-22-->
+    <dimen name="text_small_size24">24px</dimen><!--16-22-->
+    <dimen name="vertical_bar1_size">40px</dimen>
+    <dimen name="vertical_layout_height">105px</dimen>
+    <dimen name="vertical_layout_margin">20px</dimen>
+
+    <dimen name="topbar_big_title_size">58px</dimen>
+    <dimen name="item_title_size">30px</dimen>
+
+
+    <dimen name="topbar_height">98px</dimen>
+    <dimen name="topbar_icon_size">44px</dimen>
+    <dimen name="topbar_icon_width_height">98px</dimen>
+    <dimen name="content_left_right_margin_padding_small">20px</dimen>
+    <dimen name="content_left_right_margin_padding_big">30px</dimen>
+    <dimen name="setting_item_height">125px</dimen>
+    <dimen name="tab_icon_size">62px</dimen>
+
+    <dimen name="top_icon_size">70px</dimen>
+
+
+    <dimen name="main_horizontal_margin">30px</dimen>
+    <dimen name="main_horizontal_margin_db">15dp</dimen>
+    <dimen name="item_margintop">28px</dimen>
+    <dimen name="item_margintop_small">20px</dimen>
+    <dimen name="main_v_margin_db">7dp</dimen>
+    <dimen name="main_item_title_size">38px</dimen>
+    <dimen name="topbar_big_icon_size">66px</dimen>
+
+</resources>
