@@ -25,17 +25,20 @@
     <dimen name="content_left_right_margin_padding_small">20px</dimen>
     <dimen name="content_left_right_margin_padding_big">30px</dimen>
     <dimen name="setting_item_height">125px</dimen>
-    <dimen name="tab_icon_size">62px</dimen>
-
     <dimen name="top_icon_size">70px</dimen>
+
+    <dimen name="tab_icon_size">35px</dimen>
+    <dimen name="tab_text_size">24px</dimen>
 
 
     <dimen name="main_horizontal_margin">30px</dimen>
-    <dimen name="main_horizontal_margin_db">15dp</dimen>
     <dimen name="item_margintop">28px</dimen>
     <dimen name="item_margintop_small">20px</dimen>
     <dimen name="main_v_margin_db">7dp</dimen>
     <dimen name="main_item_title_size">38px</dimen>
     <dimen name="topbar_big_icon_size">66px</dimen>
+
+
+    //
 
 </resources>

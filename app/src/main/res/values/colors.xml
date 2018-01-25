@@ -10,7 +10,7 @@
     <color name="gray">#5000</color>
     <color name="line">#e7e7e7</color>
     <color name="transparent">#0000</color>
-    <color name="main">#4FC1E9</color>
+    <color name="main">#2395FF</color>
     <color name="main_bg">#F5F5F5</color>
     <color name="black_light">#3A3A3A</color>
     <color name="orange">#FF5301</color>
@@ -25,5 +25,10 @@
     <color name="text3">#c8969696</color>
     <color name="text4">#DDDDDD</color>
     <color name="text5">#EFEFEF</color>
+
+
+    <color name= "tab_nor_color">#969696</color>
+    <color name= "tab_sel_color">#2395FF</color>
+
 
 </resources>

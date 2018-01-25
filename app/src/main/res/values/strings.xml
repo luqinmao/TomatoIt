@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TomatoIt</string>
+
+
+
+    <!--iconfont字体图标-->
+
+    <string name="tab_left">&#xe73e; </string> <!--左对齐-->
+    <string name="tab_right">&#xe618; </string> <!--右对齐-->
+
+
+
+
 </resources>

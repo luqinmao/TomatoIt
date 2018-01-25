@@ -38,7 +38,6 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AutoLa
         //子类不再需要设置布局ID，也不再需要使用ButterKnife.bind()
         setContentView(provideContentViewId());
         ButterKnife.bind(this);
-
         //沉浸式状态栏
 //        StatusBarUtil.setColor(this, UIUtils.getColor(R.color.colorPrimaryDark), 10);
 

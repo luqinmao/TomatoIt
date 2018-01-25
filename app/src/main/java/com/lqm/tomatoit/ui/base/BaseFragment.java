@@ -70,6 +70,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
 
     }
 
+
     //用于创建Presenter和判断是否使用MVP模式(由子类实现)
     protected abstract T createPresenter();
 

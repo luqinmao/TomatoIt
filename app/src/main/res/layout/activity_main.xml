@@ -1,22 +1,81 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawerlayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical">
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:background="@color/line" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="100px"
+        android:orientation="horizontal">
 
-        <com.lqm.tomatoit.widget.NoScrollViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:id="@+id/ll_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.lqm.tomatoit.widget.IconFontTextView
+                android:id="@+id/if_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_left"
+                android:textColor="@color/main"
+                android:textSize="@dimen/tab_icon_size" />
+
+            <TextView
+                android:id="@+id/tv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5px"
+                android:text="首页"
+                android:textColor="@color/main"
+                android:textSize="@dimen/tab_text_size" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.lqm.tomatoit.widget.IconFontTextView
+                android:id="@+id/if_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_right"
+                android:textColor="@color/main"
+                android:textSize="@dimen/tab_icon_size" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5px"
+                android:text="分类"
+                android:textColor="@color/main"
+                android:textSize="@dimen/tab_text_size" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <include layout="@layout/layout_main_menu" />
-
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>
