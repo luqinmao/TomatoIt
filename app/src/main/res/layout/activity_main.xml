@@ -3,6 +3,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/layout_topbar_home"/>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

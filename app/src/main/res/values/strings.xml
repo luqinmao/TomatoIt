@@ -4,11 +4,12 @@
 
 
     <!--iconfont字体图标-->
-
     <string name="tab_left">&#xe73e; </string> <!--左对齐-->
     <string name="tab_right">&#xe618; </string> <!--右对齐-->
-
-
+    <string name="ic_hot">&#xe664; </string> <!--火-->
+    <string name="ic_return">&#xe6e5; </string> <!--返回-->
+    <string name="ic_share">&#xe66c; </string> <!--分享-->
+    <string name="ic_search">&#xe6a8; </string> <!--搜索-->
 
 
 </resources>
