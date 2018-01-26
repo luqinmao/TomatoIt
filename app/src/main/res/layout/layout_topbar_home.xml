@@ -11,24 +11,17 @@
 
         <com.lqm.tomatoit.widget.IconFontTextView
             android:id="@+id/tv_hot"
-            android:layout_width="@dimen/topbar_icon_width_height"
-            android:layout_height="match_parent"
+            style="@style/topbar_icon_style"
             android:layout_marginRight="20px"
             android:layout_toLeftOf="@+id/tv_search"
-            android:gravity="center"
-            android:text="@string/ic_hot"
-            android:textColor="@color/white"
-            android:textSize="@dimen/topbar_icon_size" />
+            android:text="@string/ic_hot" />
 
         <com.lqm.tomatoit.widget.IconFontTextView
             android:id="@+id/tv_search"
-            android:layout_width="@dimen/topbar_icon_width_height"
-            android:layout_height="match_parent"
+            style="@style/topbar_icon_style"
             android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="@string/ic_search"
-            android:textColor="@color/white"
-            android:textSize="@dimen/topbar_icon_size" />
+            android:layout_marginRight="20px"
+            android:text="@string/ic_search" />
 
     </RelativeLayout>
 

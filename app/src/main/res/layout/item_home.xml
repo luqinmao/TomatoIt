@@ -1,16 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asds"
-        android:textSize="50px"
-        />
+        android:layout_margin="5dp"
+        android:layout_marginTop="30px"
+        app:cardCornerRadius="10dp"
+        app:contentPadding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="80px"
+                android:text="文章标题文章标题文章标题文章标题文章标题文章标题"
+                android:textColor="@color/text0"
+                android:textSize="@dimen/text_big_size" />
+
+
+            <com.lqm.tomatoit.widget.IconFontTextView
+                android:id="@+id/tv_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_title"
+                android:text="@string/ic_collect_nor"
+                android:textColor="@color/text3"
+                android:textSize="50px" />
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_title"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="20px"
+                android:text="作者"
+                android:textColor="@color/main"
+                android:textSize="@dimen/text_medium_size" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/tv_author"
+                android:text="类别"
+                android:textColor="@color/main"
+                android:textSize="@dimen/text_medium_size" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>
+
+

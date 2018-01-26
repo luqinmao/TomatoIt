@@ -37,10 +37,12 @@ public class MainActivity extends BaseActivity {
     TextView tvType;
     @Bind(R.id.ll_type)
     LinearLayout llType;
-
+    @Bind(R.id.tv_hot)
+    IconFontTextView tvHot;
+    @Bind(R.id.tv_search)
+    IconFontTextView tvSearch;
 
     private List<Fragment> mFragments = new ArrayList<>();
-
 
     @Override
     protected BasePresenter createPresenter() {
@@ -55,10 +57,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        setTabColor(ifHome,tvHome);
+        setTabColor(ifHome, tvHome);
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(TypeFragment.newInstance());
-        viewPager.setAdapter(new FragPagerAdapter(getSupportFragmentManager(),mFragments));
+        viewPager.setAdapter(new FragPagerAdapter(getSupportFragmentManager(), mFragments));
         viewPager.setCurrentItem(0, false);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -69,12 +71,12 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
-                        setTabColor(ifHome,tvHome);
+                        setTabColor(ifHome, tvHome);
                         break;
                     case 1:
-                        setTabColor(ifType,tvType);
+                        setTabColor(ifType, tvType);
                         break;
                 }
             }
@@ -87,21 +89,27 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_home, R.id.ll_type})
+    @OnClick({R.id.ll_home, R.id.ll_type, R.id.tv_hot, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_home:
                 viewPager.setCurrentItem(0);
-                setTabColor(ifHome,tvHome);
+                setTabColor(ifHome, tvHome);
                 break;
             case R.id.ll_type:
                 viewPager.setCurrentItem(1);
-                setTabColor(ifType,tvType);
+                setTabColor(ifType, tvType);
+                break;
+            case R.id.tv_hot:
+
+                break;
+            case R.id.tv_search:
+
                 break;
         }
     }
 
-    private void setTabColor(IconFontTextView icon,TextView textView){
+    private void setTabColor(IconFontTextView icon, TextView textView) {
         ifHome.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
         tvHome.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
         ifType.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
@@ -109,4 +117,6 @@ public class MainActivity extends BaseActivity {
         icon.setTextColor(UIUtils.getColor(R.color.tab_sel_color));
         textView.setTextColor(UIUtils.getColor(R.color.tab_sel_color));
     }
+
+
 }

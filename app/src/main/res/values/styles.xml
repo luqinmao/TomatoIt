@@ -38,4 +38,15 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
+
+    <!--topbar iconfont style-->
+    <style name="topbar_icon_style" >
+        <item name="android:layout_width">@dimen/topbar_icon_width_height</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/topbar_icon_size</item>
+    </style>
+
+
 </resources>

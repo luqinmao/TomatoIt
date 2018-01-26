@@ -3,9 +3,12 @@ package com.lqm.tomatoit.api;
 import com.lqm.tomatoit.app.AppConst;
 import com.lqm.tomatoit.helper.JsonConvert;
 import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.model.pojo.BannerBean;
 import com.lqm.tomatoit.model.pojoVO.HomeVO;
 import com.lzy.okgo.OkGo;
 import com.lzy.okrx2.adapter.ObservableBody;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -17,7 +20,19 @@ import io.reactivex.Observable;
 
 public class WanService {
 
-    private static String homeDataList = AppConst.BASE_URL + "/article/list/{page}/json";
+    private static String homeDataList = AppConst.BASE_URL + "article/list/{page}/json";
+    private static String homeBannerData = AppConst.BASE_URL + "banner/json";
+
+    /**
+     * 首页Banner
+     * @GET("/banner/json")
+     */
+    public static Observable<ResponseData<List<BannerBean>>> getBannerData() {
+        return OkGo.<ResponseData<List<BannerBean>>>get(homeBannerData)
+                .converter(new JsonConvert<ResponseData<List<BannerBean>>>() {
+                })
+                .adapt(new ObservableBody<ResponseData<List<BannerBean>>>());
+    }
 
     /**
      * 首页数据
@@ -112,11 +127,6 @@ public class WanService {
      * @param id id
      * @param originId -1
      * POST("/lg/uncollect/{id}/json")
-     */
-
-    /**
-     * 首页Banner
-     * @GET("/banner/json")
      */
 
     /**

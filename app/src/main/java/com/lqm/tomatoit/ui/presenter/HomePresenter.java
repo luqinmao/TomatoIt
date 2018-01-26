@@ -7,9 +7,12 @@ import android.view.View;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
 import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.model.pojo.BannerBean;
 import com.lqm.tomatoit.model.pojoVO.HomeVO;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.ui.view.HomeView;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -101,4 +104,32 @@ public class HomePresenter extends BasePresenter<HomeView> {
         Snackbar.make(mHomeView.getRecyclerView(), e.getMessage() + "", Snackbar.LENGTH_SHORT).show();
     }
 
+    //获取轮播图数据
+    public void getBannerData() {
+        mHomeView = getView();
+        WanService.getBannerData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<List<BannerBean>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<List<BannerBean>> responseData) {
+                        mHomeView.setBannerData(responseData.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }
