@@ -10,7 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.manager.ImageLoaderManager;
 import com.lqm.tomatoit.model.pojo.BannerBean;
-import com.lqm.tomatoit.ui.adapter.HomeAdapter;
+import com.lqm.tomatoit.ui.activity.WebViewActivity;
+import com.lqm.tomatoit.ui.adapter.ArticleListAdapter;
 import com.lqm.tomatoit.ui.base.BaseFragment;
 import com.lqm.tomatoit.ui.presenter.HomePresenter;
 import com.lqm.tomatoit.ui.view.HomeView;
@@ -33,7 +34,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
     RecyclerView rvContent;
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
-    private HomeAdapter mAdapter;
+    private ArticleListAdapter mAdapter;
     private BGABanner mBannerView;
 
     public static HomeFragment newInstance() {
@@ -76,11 +77,6 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
     public void setBannerData(List<BannerBean> bannerData) {
         //设置轮播图
         mBannerView.setData(R.layout.item_banner, bannerData, null);
-//        if(bannerData.size() >1){
-//            mBannerView.setAutoPlayAble(true);
-//        }else{
-//            mBannerView.setAutoPlayAble(false);
-//        }
         mBannerView.setAdapter(new BGABanner.Adapter<View, BannerBean>() {
             @Override
             public void fillBannerItem(BGABanner banner, View itemView, BannerBean model, int position) {
@@ -91,6 +87,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
         mBannerView.setDelegate(new BGABanner.Delegate<View, BannerBean>() {
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, BannerBean model, int position) {
+                WebViewActivity.runActivity(getContext(),model.getUrl());
 
             }
         });
@@ -102,7 +99,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
     }
 
     @Override
-    public HomeAdapter getAdapter() {
+    public ArticleListAdapter getAdapter() {
         return mAdapter;
     }
 
@@ -110,7 +107,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
     public void initView(View rootView) {
 
         rvContent.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new HomeAdapter(getContext(),null);
+        mAdapter = new ArticleListAdapter(getContext(),null);
         rvContent.setAdapter(mAdapter);
         swipeRefresh.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this);

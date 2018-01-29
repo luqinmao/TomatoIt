@@ -49,4 +49,16 @@
     </style>
 
 
+    <!--线样式-->
+    <style name="lineStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1.5px</item>
+        <item name="android:background">@color/line</item>
+    </style>
+
+    <!--TabLayout-->
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

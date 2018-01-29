@@ -1,6 +1,6 @@
 package com.lqm.tomatoit.model.pojoVO;
 
-import com.lqm.tomatoit.model.pojo.HomeBean;
+import com.lqm.tomatoit.model.pojo.ArticleBean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,7 +28,7 @@ public class HomeVO implements Serializable {
     private int pageCount;
     private int curPage;
     private boolean over;
-    private List<HomeBean> datas;
+    private List<ArticleBean> datas;
 
     public int getOffset() {
         return offset;
@@ -78,11 +78,11 @@ public class HomeVO implements Serializable {
         this.over = over;
     }
 
-    public List<HomeBean> getDatas() {
+    public List<ArticleBean> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<HomeBean> datas) {
+    public void setDatas(List<ArticleBean> datas) {
         this.datas = datas;
     }
 

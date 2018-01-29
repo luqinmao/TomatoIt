@@ -8,27 +8,28 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lqm.tomatoit.R;
-import com.lqm.tomatoit.model.pojo.HomeBean;
+import com.lqm.tomatoit.model.pojo.ArticleBean;
+import com.lqm.tomatoit.ui.activity.WebViewActivity;
 import com.lqm.tomatoit.util.UIUtils;
 
 import java.util.List;
 
 /**
  * user：lqm
- * desc：首页列表适配器
+ * desc：文章列表适配器
  */
 
-public class HomeAdapter extends BaseQuickAdapter<HomeBean> {
+public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
 
     private Context mContext;
 
-    public HomeAdapter(Context context, @Nullable List<HomeBean> data) {
-        super(R.layout.item_home, data);
+    public ArticleListAdapter(Context context, @Nullable List<ArticleBean> data) {
+        super(R.layout.item_article, data);
         mContext = context;
     }
 
     @Override
-    protected void convert(final BaseViewHolder holder, final HomeBean bean) {
+    protected void convert(final BaseViewHolder holder, final ArticleBean bean) {
         holder.setText(R.id.tv_title, bean.getTitle())
                 .setText(R.id.tv_author, bean.getAuthor())
                 .setText(R.id.tv_type, bean.getChapterName());
@@ -46,7 +47,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                WebViewActivity.runActivity(mContext,bean.getLink());
             }
         });
     }

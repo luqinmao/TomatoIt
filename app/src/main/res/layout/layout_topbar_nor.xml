@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/topbar_height"
+      android:orientation="horizontal"
+     android:gravity="center_vertical"
+    android:background="@color/colorPrimary"
+    >
+
+    <com.lqm.tomatoit.widget.IconFontTextView
+        android:id="@+id/tv_return"
+        android:layout_width="@dimen/topbar_icon_width_height"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/top_icon_size"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="@string/ic_return"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="100px"
+        android:layout_marginRight="100px"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        />
+
+    <com.lqm.tomatoit.widget.IconFontTextView
+        android:id="@+id/tv_other"
+        android:layout_width="@dimen/topbar_icon_width_height"
+        android:layout_height="match_parent"
+        android:textSize="55px"
+        android:text="@string/ic_share"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        />
+    <View
+        style="@style/lineStyle"
+        android:layout_alignParentBottom="true"
+        />
+
+</com.zhy.autolayout.AutoRelativeLayout>

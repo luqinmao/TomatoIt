@@ -7,7 +7,7 @@ import java.io.Serializable;
  * desc：
  */
 
-public class HomeBean implements Serializable {
+public class ArticleBean implements Serializable {
     /**
      * id : 2207
      * title : 慢啄的Xposed文章

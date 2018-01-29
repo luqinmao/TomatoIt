@@ -5,6 +5,8 @@ import com.lqm.tomatoit.helper.JsonConvert;
 import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.model.pojo.BannerBean;
 import com.lqm.tomatoit.model.pojoVO.HomeVO;
+import com.lqm.tomatoit.model.pojoVO.TypeTagVO;
+import com.lqm.tomatoit.model.pojoVO.TypeVO;
 import com.lzy.okgo.OkGo;
 import com.lzy.okrx2.adapter.ObservableBody;
 
@@ -25,6 +27,7 @@ public class WanService {
 
     /**
      * 首页Banner
+     *
      * @GET("/banner/json")
      */
     public static Observable<ResponseData<List<BannerBean>>> getBannerData() {
@@ -50,10 +53,18 @@ public class WanService {
     }
 
     /**
-     * 知识体系
+     * 知识体系 (类别tag)
      * http://www.wanandroid.com/tree/json
      * @GET("/tree/json")
      */
+    public static Observable<ResponseData<List<TypeTagVO>>> getTypeTagData() {
+        String url = AppConst.BASE_URL + "tree/json";
+        return OkGo.<ResponseData<List<TypeTagVO>>>get(url)
+                .converter(new JsonConvert<ResponseData<List<TypeTagVO>>>() {
+                })
+                .adapt(new ObservableBody<ResponseData<List<TypeTagVO>>>());
+    }
+
 
     /**
      * 知识体系下的文章
@@ -62,6 +73,15 @@ public class WanService {
      * @param cid cid
      * @GET("/article/list/{page}/json")
      */
+    public static Observable<ResponseData<TypeVO>> getTypeDataById(int page, int cid) {
+        String url = AppConst.BASE_URL + "/article/list/" + page + "/json";
+        return OkGo.<ResponseData<TypeVO>>get(url)
+                .params("cid",cid)
+                .converter(new JsonConvert<ResponseData<TypeVO>>() {
+                })
+                .adapt(new ObservableBody<ResponseData<TypeVO>>());
+    }
+
 
     /**
      * 常用网站
