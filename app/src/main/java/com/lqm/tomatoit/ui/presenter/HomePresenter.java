@@ -49,17 +49,15 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onNext(ResponseData<HomeVO> responseData) {
-                        if (responseData.getData().getSize() != 0) {   //防止崩溃
-                            mHomeView.getAdapter().addData(responseData.getData().getDatas());
-                            //显示没有更多数据
-                            if (responseData.getData().getSize() == 0) {
-                                mHomeView.getAdapter().loadComplete();         //加载完成
-                                View noDataView = View.inflate(mActivity, R.layout.item_no_data, null);
-                                mHomeView.getAdapter().addFooterView(noDataView);
-                            }
-                        } else {
-                            mHomeView.getAdapter().loadComplete();         //加载完成
+                        if (responseData.getData().getSize() == 0){
+//                            mRvContent.setVisibility(View.GONE);
+//                            mLankLayout.setVisibility(View.VISIBLE);
+                        }else{
+//                            mLankLayout.setVisibility(View.GONE);
+//                            mRvContent.setVisibility(View.VISIBLE);
+                            mHomeView.getAdapter().setNewData(responseData.getData().getDatas());
                         }
+
                     }
 
                     @Override

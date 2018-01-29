@@ -63,7 +63,7 @@ public class TypeFragment extends BaseFragment<TypeView, TypePresenter>
 
     @Override
     public void onLoadMoreRequested() {
-
+        mPresenter.getMoreData();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.lqm.tomatoit.ui.presenter;
 
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -37,6 +38,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
     private int mCurrentPage ;
     private List<TypeTagVO> mTagDatas;
     private ArticleListAdapter mAdapter;
+    private int mId;
 
     public TypePresenter(FragmentActivity activity) {
         this.mActivity = activity;
@@ -123,7 +125,8 @@ public class TypePresenter extends BasePresenter<TypeView> {
                     tvItem.setTextColor(UIUtils.getColor(R.color.white));
                     tvItem.setBackgroundResource(R.drawable.shape_tag_sel);
 
-                    getServerData(mTagDatas.get(position).getChildren().get(finalI).getId());
+                    mId = mTagDatas.get(position).getChildren().get(finalI).getId();
+                    getServerData(mId);
                 }
             });
         }
@@ -132,7 +135,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
     //根据点击的标签获取数据
     public void getServerData(int cid){
-        mCurrentPage = 1;
+        mCurrentPage = 0; //从第0页开始
         mAdapter =  mTypeView.getAdapter();
         WanService.getTypeDataById(mCurrentPage,cid)
                 .subscribeOn(Schedulers.io())
@@ -145,22 +148,15 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
                     @Override
                     public void onNext(ResponseData<TypeVO> responseData) {
-                        if (responseData.getData().getDatas().size() != 0) {   //防止崩溃
-                            mAdapter.addData(responseData.getData().getDatas());
-                            //显示没有更多数据
-                            if (responseData.getData().getDatas().size() == 0) {
-                                mAdapter.loadComplete();         //加载完成
-                                View noDataView = View.inflate(mActivity, R.layout.item_no_data, null);
-                                mAdapter.addFooterView(noDataView);
-                            }
-                        } else {
-                            mAdapter.loadComplete();         //加载完成
+                        if (responseData.getData().getDatas() != null){
+                            mAdapter.setNewData(responseData.getData().getDatas());
                         }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showError(e);
                     }
 
                     @Override
@@ -169,5 +165,29 @@ public class TypePresenter extends BasePresenter<TypeView> {
                     }
                 });
 
+    }
+
+    //加载下一页
+    public void getMoreData() {
+        mCurrentPage = mCurrentPage + 1;
+        WanService.getTypeDataById(mCurrentPage,mId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(responseData -> setMoreDataView(responseData),this::showError);
+
+    }
+
+    private void setMoreDataView(ResponseData<TypeVO> responseData){
+        if (responseData.getData().getDatas().size() != 0) {
+            mAdapter.addData(responseData.getData().getDatas());
+        } else {
+            mAdapter.loadComplete();
+            View noDataView = View.inflate(mActivity, R.layout.item_no_data, null);
+            mAdapter.addFooterView(noDataView);
+        }
+    }
+
+    private void showError(Throwable e){
+        Snackbar.make(mTypeView.getRecyclerView(), e.getMessage() + "", Snackbar.LENGTH_SHORT).show();
     }
 }

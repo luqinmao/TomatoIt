@@ -45,7 +45,7 @@ public class WanService {
      * @GET("/article/list/{page}/json")
      */
     public static Observable<ResponseData<HomeVO>> getHomeData(int page) {
-        String url = AppConst.BASE_URL + "/article/list/" + page + "/json";
+        String url = AppConst.BASE_URL + "article/list/" + page + "/json";
         return OkGo.<ResponseData<HomeVO>>get(url)
                 .converter(new JsonConvert<ResponseData<HomeVO>>() {
                 })
@@ -74,7 +74,7 @@ public class WanService {
      * @GET("/article/list/{page}/json")
      */
     public static Observable<ResponseData<TypeVO>> getTypeDataById(int page, int cid) {
-        String url = AppConst.BASE_URL + "/article/list/" + page + "/json";
+        String url = AppConst.BASE_URL + "article/list/" + page + "/json";
         return OkGo.<ResponseData<TypeVO>>get(url)
                 .params("cid",cid)
                 .converter(new JsonConvert<ResponseData<TypeVO>>() {
