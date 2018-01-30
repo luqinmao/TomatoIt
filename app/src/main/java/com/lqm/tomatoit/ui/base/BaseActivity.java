@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.lqm.tomatoit.R;
@@ -41,9 +43,24 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AutoLa
         //沉浸式状态栏
 //        StatusBarUtil.setColor(this, UIUtils.getColor(R.color.colorPrimaryDark), 10);
 
+        excuteStatesBar();
+
         initView();
         initData();
         initListener();
+    }
+
+    /**
+     * 解决4.4设置状态栏颜色之后，布局内容嵌入状态栏位置问题
+     */
+    private void excuteStatesBar(){
+        ViewGroup mContentView = (ViewGroup) getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        View mChildView = mContentView.getChildAt(0);
+        if (mChildView != null) {
+            //注意不是设置 ContentView 的 FitsSystemWindows,
+            // 而是设置 ContentView 的第一个子 View ，预留出系统 View 的空间.
+            mChildView.setFitsSystemWindows(true);
+        }
     }
 
     @Override

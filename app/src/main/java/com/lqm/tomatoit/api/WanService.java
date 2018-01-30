@@ -3,7 +3,10 @@ package com.lqm.tomatoit.api;
 import com.lqm.tomatoit.app.AppConst;
 import com.lqm.tomatoit.helper.JsonConvert;
 import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.model.pojo.BannerBean;
+import com.lqm.tomatoit.model.pojo.HotKeyBean;
+import com.lqm.tomatoit.model.pojo.UserBean;
 import com.lqm.tomatoit.model.pojoVO.HomeVO;
 import com.lqm.tomatoit.model.pojoVO.TypeTagVO;
 import com.lqm.tomatoit.model.pojoVO.TypeVO;
@@ -24,6 +27,9 @@ public class WanService {
 
     private static String homeDataList = AppConst.BASE_URL + "article/list/{page}/json";
     private static String homeBannerData = AppConst.BASE_URL + "banner/json";
+    private static String hotKeyUrl = AppConst.BASE_URL + "hotkey/json";
+    private static String loginUrl = AppConst.BASE_URL + "user/login";
+    private static String getClollectData = AppConst.BASE_URL + "lg/collect/list/0/json";
 
     /**
      * 首页Banner
@@ -94,14 +100,27 @@ public class WanService {
      * http://www.wanandroid.com/hotkey/json
      * @GET("/hotkey/json")
      */
+    public static Observable<ResponseData<List<HotKeyBean>>> getHotKey() {
+        return OkGo.<ResponseData<List<HotKeyBean>>>get(hotKeyUrl)
+                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {})
+                .adapt(new ObservableBody<ResponseData<List<HotKeyBean>>>());
+    }
 
     /**
      * 搜索
      * http://www.wanandroid.com/article/query/0/json
      * @param page page
-     * @param k POST search key
+     * @param k  POST search key
      * @POST("/article/query/{page}/json")
      */
+
+    public static Observable<ResponseData<List<HotKeyBean>>> getSearchData(int page,String key) {
+        String url = AppConst.BASE_URL +"article/query/"+page+"/json";
+        return OkGo.<ResponseData<List<HotKeyBean>>>post(url)
+                .params("k",key)
+                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {})
+                .adapt(new ObservableBody<ResponseData<List<HotKeyBean>>>());
+    }
 
 
     /**
@@ -110,27 +129,55 @@ public class WanService {
      * @param password password
      * @POST("/user/login")
      */
+    public static Observable<ResponseData<UserBean>> login(String username, String password) {
+        return OkGo.<ResponseData<UserBean>>post(loginUrl)
+                .params("username",username)
+                .params("password",password)
+                .converter(new JsonConvert<ResponseData<UserBean>>() {})
+                .adapt(new ObservableBody<ResponseData<UserBean>>());
+    }
 
     /**
      * 注册
      * @param username username
      * @param password password
-     * @param repassword repassword
+     * @param repassword 确认密码
      * @POST("/user/register")
      */
+    public static Observable<ResponseData<UserBean>> regist(String username, String password) {
+        return OkGo.<ResponseData<UserBean>>post(loginUrl)
+                .params("username",username)
+                .params("password",password)
+                .params("repassword",password)
+                .converter(new JsonConvert<ResponseData<UserBean>>() {})
+                .adapt(new ObservableBody<ResponseData<UserBean>>());
+    }
 
     /**
      * 获取自己收藏的文章列表
      * @param page page
      * @GET("/lg/collect/list/{page}/json")
      */
-
+    public static Observable<ResponseData<List<ArticleBean>>> getCollectData(int page) {
+        String url = AppConst.BASE_URL +"lg/collect/list/"+page+"/json";
+        return OkGo.<ResponseData<List<ArticleBean>>>
+                get(url)
+                .converter(new JsonConvert<ResponseData<List<ArticleBean>>>() {})
+                .adapt(new ObservableBody<ResponseData<List<ArticleBean>>>());
+    }
 
     /**
      * 收藏文章
      * @param id id
      * @POST("/lg/collect/{id}/json")
      */
+    public static Observable<ResponseData<String>> collectArticle(int id) {
+        String url = AppConst.BASE_URL +"lg/collect/"+id+"/json";
+        return OkGo.<ResponseData<String>>
+                post(url)
+                .converter(new JsonConvert<ResponseData<String>>() {})
+                .adapt(new ObservableBody<ResponseData<String>>());
+    }
 
 
     /**
@@ -148,6 +195,14 @@ public class WanService {
      * @param originId -1
      * POST("/lg/uncollect/{id}/json")
      */
+    public static Observable<ResponseData<String>> unCollectArticle(int id) {
+        String url = AppConst.BASE_URL +"lg/uncollect/"+id+"/json";
+        return OkGo.<ResponseData<String>>
+                post(url)
+                .params("originId",-1)
+                .converter(new JsonConvert<ResponseData<String>>() {})
+                .adapt(new ObservableBody<ResponseData<String>>());
+    }
 
     /**
      * 我的常用网址

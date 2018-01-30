@@ -32,6 +32,22 @@
             android:name=".ui.activity.WebViewActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.CollectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

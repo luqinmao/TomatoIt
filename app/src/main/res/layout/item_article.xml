@@ -16,46 +16,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.lqm.tomatoit.widget.RoundImageView
+                android:id="@+id/iv_photo"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_photo"
+                app:type="circle" />
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/iv_photo"
+                android:layout_marginLeft="10px"
+                android:layout_marginTop="10px"
+                android:layout_toRightOf="@id/iv_photo"
+                android:text="作者"
+                android:textColor="@color/main"
+                android:textSize="@dimen/text_medium_size" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/iv_photo"
+                android:text="1小时前"
+                android:textColor="@color/main"
+                android:textSize="@dimen/text_medium_size" />
+
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/iv_photo"
                 android:layout_marginRight="80px"
                 android:text="文章标题文章标题文章标题文章标题文章标题文章标题"
                 android:textColor="@color/text0"
-                android:textSize="@dimen/text_big_size" />
+                android:textSize="@dimen/text_big_size"
+                android:layout_marginTop="30px"
+                android:layout_marginLeft="10px"
+                />
 
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="30px"
+                android:text="类别"
+                android:textColor="@color/main"
+                android:textSize="@dimen/text_medium_size" />
 
             <com.lqm.tomatoit.widget.IconFontTextView
                 android:id="@+id/tv_collect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@id/tv_title"
+                android:layout_alignTop="@id/tv_type"
                 android:text="@string/ic_collect_nor"
                 android:textColor="@color/text3"
                 android:textSize="50px" />
 
-            <TextView
-                android:id="@+id/tv_author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/tv_title"
-                android:layout_below="@id/tv_title"
-                android:layout_marginTop="20px"
-                android:text="作者"
-                android:textColor="@color/main"
-                android:textSize="@dimen/text_medium_size" />
-
-            <TextView
-                android:id="@+id/tv_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@id/tv_author"
-                android:text="类别"
-                android:textColor="@color/main"
-                android:textSize="@dimen/text_medium_size" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

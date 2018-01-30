@@ -36,7 +36,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     //刷新
     public void getRefreshData() {
-        mCurrentPage = 1;
+        mCurrentPage = 0;
         mHomeView = getView();
         WanService.getHomeData(mCurrentPage)
                 .subscribeOn(Schedulers.io())

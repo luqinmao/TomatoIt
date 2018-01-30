@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="50px">
+
+        <com.lqm.tomatoit.widget.IconFontTextView
+            android:id="@+id/ic_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/ic_return"
+            android:textColor="@color/text0"
+            android:textSize="@dimen/top_icon_size" />
+
+        <com.lqm.tomatoit.widget.RoundImageView
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:layout_below="@id/ic_close"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_photo"
+            app:type="circle" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50px">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="用户名 : "
+            android:textColor="@color/text0"
+            android:textSize="@dimen/text_big_size" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_name" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50px">
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="密    码 : "
+            android:textColor="@color/text0"
+            android:textSize="@dimen/text_big_size" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_password" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="注册"
+            android:textColor="@color/text0"
+            android:textSize="@dimen/text_big_size" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="登录"
+            android:textColor="@color/text0"
+            android:textSize="@dimen/text_big_size" />
+    </LinearLayout>
+
+
+</LinearLayout>

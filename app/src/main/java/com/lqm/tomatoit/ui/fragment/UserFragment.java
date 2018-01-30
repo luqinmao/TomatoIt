@@ -1,10 +1,13 @@
 package com.lqm.tomatoit.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lqm.tomatoit.R;
+import com.lqm.tomatoit.ui.activity.AboutActivity;
+import com.lqm.tomatoit.ui.activity.LoginActivity;
 import com.lqm.tomatoit.ui.base.BaseFragment;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.util.T;
@@ -50,8 +53,10 @@ public class UserFragment extends BaseFragment {
                 T.showShort(getContext(),"点击");
                 break;
             case R.id.cv_about:
+                startActivity(new Intent(getActivity(),AboutActivity.class));
                 break;
             case R.id.cv_logou:
+                startActivity(new Intent(getActivity(),LoginActivity.class));
                 break;
         }
     }

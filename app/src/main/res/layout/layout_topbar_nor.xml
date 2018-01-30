@@ -38,6 +38,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
         />
     <View
         style="@style/lineStyle"
