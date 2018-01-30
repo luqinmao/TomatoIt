@@ -150,6 +150,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
                     public void onNext(ResponseData<TypeVO> responseData) {
                         if (responseData.getData().getDatas() != null){
                             mAdapter.setNewData(responseData.getData().getDatas());
+                            mTypeView.getTagLayout().setVisibility(View.GONE);
                         }
 
                     }

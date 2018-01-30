@@ -13,6 +13,8 @@
         android:paddingLeft="20px"
         android:paddingRight="20px"
         android:text="热词"
-        android:textColor="@color/text1" />
+        android:textColor="@color/text1"
+        android:background="@drawable/shape_tag_nor"
+        />
 
 </LinearLayout>

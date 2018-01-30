@@ -12,6 +12,9 @@
     <string name="ic_search">&#xe6a8; </string> <!--搜索-->
     <string name="ic_collect_nor">&#xe63c; </string> <!--未收藏-->
     <string name="ic_collect_sel">&#xe63b; </string> <!--已收藏-->
+    <string name="ic_about">&#xe7ca; </string> <!--关于-->
+
+
 
 
 

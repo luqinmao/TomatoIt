@@ -78,6 +78,33 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.lqm.tomatoit.widget.IconFontTextView
+                android:id="@+id/if_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ic_about"
+                android:textColor="@color/main"
+                android:textSize="@dimen/tab_icon_size" />
+
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5px"
+                android:text="个人"
+                android:textColor="@color/main"
+                android:textSize="@dimen/tab_text_size" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -12,6 +12,7 @@ import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.ui.fragment.HomeFragment;
 import com.lqm.tomatoit.ui.fragment.TypeFragment;
+import com.lqm.tomatoit.ui.fragment.UserFragment;
 import com.lqm.tomatoit.util.UIUtils;
 import com.lqm.tomatoit.widget.IconFontTextView;
 
@@ -37,6 +38,12 @@ public class MainActivity extends BaseActivity {
     TextView tvType;
     @Bind(R.id.ll_type)
     LinearLayout llType;
+    @Bind(R.id.if_user)
+    IconFontTextView ifUser;
+    @Bind(R.id.tv_user)
+    TextView tvUser;
+    @Bind(R.id.ll_user)
+    LinearLayout llUser;
     @Bind(R.id.tv_hot)
     IconFontTextView tvHot;
     @Bind(R.id.tv_search)
@@ -60,6 +67,7 @@ public class MainActivity extends BaseActivity {
         setTabColor(ifHome, tvHome);
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(TypeFragment.newInstance());
+        mFragments.add(UserFragment.newInstance());
         viewPager.setAdapter(new FragPagerAdapter(getSupportFragmentManager(), mFragments));
         viewPager.setCurrentItem(0, false);
 
@@ -78,6 +86,9 @@ public class MainActivity extends BaseActivity {
                     case 1:
                         setTabColor(ifType, tvType);
                         break;
+                    case 2:
+                        setTabColor(ifUser, tvUser);
+                        break;
                 }
             }
 
@@ -89,7 +100,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_home, R.id.ll_type, R.id.tv_hot, R.id.tv_search})
+    @OnClick({R.id.ll_home, R.id.ll_type,R.id.ll_user, R.id.tv_hot, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_home:
@@ -99,6 +110,10 @@ public class MainActivity extends BaseActivity {
             case R.id.ll_type:
                 viewPager.setCurrentItem(1);
                 setTabColor(ifType, tvType);
+                break;
+            case R.id.ll_user:
+                viewPager.setCurrentItem(2);
+                setTabColor(ifUser, tvUser);
                 break;
             case R.id.tv_hot:
 
@@ -114,6 +129,8 @@ public class MainActivity extends BaseActivity {
         tvHome.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
         ifType.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
         tvType.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
+        ifUser.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
+        tvUser.setTextColor(UIUtils.getColor(R.color.tab_nor_color));
         icon.setTextColor(UIUtils.getColor(R.color.tab_sel_color));
         textView.setTextColor(UIUtils.getColor(R.color.tab_sel_color));
     }
