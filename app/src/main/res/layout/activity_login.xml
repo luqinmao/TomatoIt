@@ -84,6 +84,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_regist"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -92,6 +93,7 @@
             android:textSize="@dimen/text_big_size" />
 
         <Button
+            android:id="@+id/btn_login"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

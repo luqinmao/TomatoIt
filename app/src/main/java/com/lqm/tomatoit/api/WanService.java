@@ -29,6 +29,7 @@ public class WanService {
     private static String homeBannerData = AppConst.BASE_URL + "banner/json";
     private static String hotKeyUrl = AppConst.BASE_URL + "hotkey/json";
     private static String loginUrl = AppConst.BASE_URL + "user/login";
+    private static String registUrl = AppConst.BASE_URL + "user/register";
     private static String getClollectData = AppConst.BASE_URL + "lg/collect/list/0/json";
 
     /**
@@ -61,6 +62,7 @@ public class WanService {
     /**
      * 知识体系 (类别tag)
      * http://www.wanandroid.com/tree/json
+     *
      * @GET("/tree/json")
      */
     public static Observable<ResponseData<List<TypeTagVO>>> getTypeTagData() {
@@ -75,14 +77,15 @@ public class WanService {
     /**
      * 知识体系下的文章
      * http://www.wanandroid.com/article/list/0/json?cid=168
+     *
      * @param page page
-     * @param cid cid
+     * @param cid  cid
      * @GET("/article/list/{page}/json")
      */
     public static Observable<ResponseData<TypeVO>> getTypeDataById(int page, int cid) {
         String url = AppConst.BASE_URL + "article/list/" + page + "/json";
         return OkGo.<ResponseData<TypeVO>>get(url)
-                .params("cid",cid)
+                .params("cid", cid)
                 .converter(new JsonConvert<ResponseData<TypeVO>>() {
                 })
                 .adapt(new ObservableBody<ResponseData<TypeVO>>());
@@ -98,115 +101,119 @@ public class WanService {
     /**
      * 大家都在搜
      * http://www.wanandroid.com/hotkey/json
+     *
      * @GET("/hotkey/json")
      */
     public static Observable<ResponseData<List<HotKeyBean>>> getHotKey() {
         return OkGo.<ResponseData<List<HotKeyBean>>>get(hotKeyUrl)
-                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {})
+                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<List<HotKeyBean>>>());
     }
 
     /**
      * 搜索
      * http://www.wanandroid.com/article/query/0/json
+     *
      * @param page page
-     * @param k  POST search key
+     * @param k    POST search key
      * @POST("/article/query/{page}/json")
      */
+    public static Observable<ResponseData<List<ArticleBean>>> search(int page) {
+        String url = AppConst.BASE_URL + "article/query/" + page + "/json";
+        return OkGo.<ResponseData<List<ArticleBean>>>post(url)
+                .converter(new JsonConvert<ResponseData<List<ArticleBean>>>() {
+                })
+                .adapt(new ObservableBody<ResponseData<List<ArticleBean>>>());
+    }
 
-    public static Observable<ResponseData<List<HotKeyBean>>> getSearchData(int page,String key) {
-        String url = AppConst.BASE_URL +"article/query/"+page+"/json";
+    public static Observable<ResponseData<List<HotKeyBean>>> getSearchData(int page, String key) {
+        String url = AppConst.BASE_URL + "article/query/" + page + "/json";
         return OkGo.<ResponseData<List<HotKeyBean>>>post(url)
-                .params("k",key)
-                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {})
+                .params("k", key)
+                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<List<HotKeyBean>>>());
     }
 
 
     /**
      * 登录
+     *
      * @param username username
      * @param password password
      * @POST("/user/login")
      */
     public static Observable<ResponseData<UserBean>> login(String username, String password) {
         return OkGo.<ResponseData<UserBean>>post(loginUrl)
-                .params("username",username)
-                .params("password",password)
-                .converter(new JsonConvert<ResponseData<UserBean>>() {})
+                .params("username", username)
+                .params("password", password)
+                .converter(new JsonConvert<ResponseData<UserBean>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<UserBean>>());
     }
 
     /**
      * 注册
-     * @param username username
-     * @param password password
+     *
+     * @param username   username
+     * @param password   password
      * @param repassword 确认密码
      * @POST("/user/register")
      */
     public static Observable<ResponseData<UserBean>> regist(String username, String password) {
-        return OkGo.<ResponseData<UserBean>>post(loginUrl)
-                .params("username",username)
-                .params("password",password)
-                .params("repassword",password)
-                .converter(new JsonConvert<ResponseData<UserBean>>() {})
+        return OkGo.<ResponseData<UserBean>>post(registUrl)
+                .params("username", username)
+                .params("password", password)
+                .params("repassword", password)
+                .converter(new JsonConvert<ResponseData<UserBean>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<UserBean>>());
     }
 
     /**
      * 获取自己收藏的文章列表
+     *
      * @param page page
      * @GET("/lg/collect/list/{page}/json")
      */
     public static Observable<ResponseData<List<ArticleBean>>> getCollectData(int page) {
-        String url = AppConst.BASE_URL +"lg/collect/list/"+page+"/json";
+        String url = AppConst.BASE_URL + "lg/collect/list/" + page + "/json";
         return OkGo.<ResponseData<List<ArticleBean>>>
                 get(url)
-                .converter(new JsonConvert<ResponseData<List<ArticleBean>>>() {})
+                .converter(new JsonConvert<ResponseData<List<ArticleBean>>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<List<ArticleBean>>>());
     }
 
     /**
      * 收藏文章
+     *
      * @param id id
      * @POST("/lg/collect/{id}/json")
      */
     public static Observable<ResponseData<String>> collectArticle(int id) {
-        String url = AppConst.BASE_URL +"lg/collect/"+id+"/json";
+        String url = AppConst.BASE_URL + "lg/collect/" + id + "/json";
         return OkGo.<ResponseData<String>>
                 post(url)
-                .converter(new JsonConvert<ResponseData<String>>() {})
+                .converter(new JsonConvert<ResponseData<String>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<String>>());
     }
 
-
     /**
-     * 收藏站外文章
-     * @param title title
-     * @param author author
-     * @param link link
-     * @POST("/lg/collect/add/json")
-     */
-
-
-    /**
-     * 删除收藏文章
+     * 取消收藏文章
+     *
      * @param id id
-     * @param originId -1
-     * POST("/lg/uncollect/{id}/json")
+     *           POST("/lg/uncollect/{id}/json")
      */
     public static Observable<ResponseData<String>> unCollectArticle(int id) {
-        String url = AppConst.BASE_URL +"lg/uncollect/"+id+"/json";
+        String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
         return OkGo.<ResponseData<String>>
                 post(url)
-                .params("originId",-1)
-                .converter(new JsonConvert<ResponseData<String>>() {})
+                .converter(new JsonConvert<ResponseData<String>>() {
+                })
                 .adapt(new ObservableBody<ResponseData<String>>());
     }
-
-    /**
-     * 我的常用网址
-     * @GET("/lg/collect/usertools/json")
-     */
 
 }

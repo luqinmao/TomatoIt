@@ -12,6 +12,7 @@ import com.lqm.tomatoit.api.WanService;
 import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.ui.activity.WebViewActivity;
+import com.lqm.tomatoit.util.PrefUtils;
 import com.lqm.tomatoit.util.T;
 import com.lqm.tomatoit.util.UIUtils;
 
@@ -64,6 +65,10 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
 
     //收藏文章
     private void collectArticle(ArticleBean bean) {
+        if (PrefUtils.getBoolean(mContext,"isLogin",false) == false){
+            T.showShort(mContext,"请先登录");
+            return;
+        }
         WanService.collectArticle(bean.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,7 +83,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
                         if (responseData.getErrorCode() == 0){
                             T.showShort(mContext,"收藏成功");
                         }else{
-                            T.showShort(mContext,"收藏失败");
+                            T.showShort(mContext,responseData.getErrorMsg());
                         }
 
                     }
