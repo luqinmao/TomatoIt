@@ -2,13 +2,11 @@ package com.lqm.tomatoit.ui.presenter;
 
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.view.View;
 
-import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
 import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.model.pojo.BannerBean;
-import com.lqm.tomatoit.model.pojoVO.HomeVO;
+import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.ui.view.HomeView;
 
@@ -41,14 +39,14 @@ public class HomePresenter extends BasePresenter<HomeView> {
         WanService.getHomeData(mCurrentPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<HomeVO>>() {
+                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mHomeView.setDataRefresh(true);
                     }
 
                     @Override
-                    public void onNext(ResponseData<HomeVO> responseData) {
+                    public void onNext(ResponseData<ArticleListVO> responseData) {
                         if (responseData.getData().getSize() == 0){
 //                            mRvContent.setVisibility(View.GONE);
 //                            mLankLayout.setVisibility(View.VISIBLE);
@@ -87,13 +85,12 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 .subscribe(responseData -> setMoreDataView(responseData),this::showError);
     }
 
-    private void setMoreDataView(ResponseData<HomeVO> responseData){
+    private void setMoreDataView(ResponseData<ArticleListVO> responseData){
         if (responseData.getData().getSize() != 0) {
             mHomeView.getAdapter().addData(responseData.getData().getDatas());
+            mHomeView.getAdapter().loadMoreComplete();
         } else {
-            mHomeView.getAdapter().loadComplete();
-            View noDataView = View.inflate(mActivity, R.layout.item_no_data, null);
-            mHomeView.getAdapter().addFooterView(noDataView);
+            mHomeView.getAdapter().loadMoreEnd();
         }
     }
 

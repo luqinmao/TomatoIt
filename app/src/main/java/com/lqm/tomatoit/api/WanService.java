@@ -7,9 +7,8 @@ import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.model.pojo.BannerBean;
 import com.lqm.tomatoit.model.pojo.HotKeyBean;
 import com.lqm.tomatoit.model.pojo.UserBean;
-import com.lqm.tomatoit.model.pojoVO.HomeVO;
+import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.model.pojoVO.TypeTagVO;
-import com.lqm.tomatoit.model.pojoVO.TypeVO;
 import com.lzy.okgo.OkGo;
 import com.lzy.okrx2.adapter.ObservableBody;
 
@@ -51,12 +50,12 @@ public class WanService {
      * @param page
      * @GET("/article/list/{page}/json")
      */
-    public static Observable<ResponseData<HomeVO>> getHomeData(int page) {
+    public static Observable<ResponseData<ArticleListVO>> getHomeData(int page) {
         String url = AppConst.BASE_URL + "article/list/" + page + "/json";
-        return OkGo.<ResponseData<HomeVO>>get(url)
-                .converter(new JsonConvert<ResponseData<HomeVO>>() {
+        return OkGo.<ResponseData<ArticleListVO>>get(url)
+                .converter(new JsonConvert<ResponseData<ArticleListVO>>() {
                 })
-                .adapt(new ObservableBody<ResponseData<HomeVO>>());
+                .adapt(new ObservableBody<ResponseData<ArticleListVO>>());
     }
 
     /**
@@ -82,13 +81,13 @@ public class WanService {
      * @param cid  cid
      * @GET("/article/list/{page}/json")
      */
-    public static Observable<ResponseData<TypeVO>> getTypeDataById(int page, int cid) {
+    public static Observable<ResponseData<ArticleListVO>> getTypeDataById(int page, int cid) {
         String url = AppConst.BASE_URL + "article/list/" + page + "/json";
-        return OkGo.<ResponseData<TypeVO>>get(url)
+        return OkGo.<ResponseData<ArticleListVO>>get(url)
                 .params("cid", cid)
-                .converter(new JsonConvert<ResponseData<TypeVO>>() {
+                .converter(new JsonConvert<ResponseData<ArticleListVO>>() {
                 })
-                .adapt(new ObservableBody<ResponseData<TypeVO>>());
+                .adapt(new ObservableBody<ResponseData<ArticleListVO>>());
     }
 
 
@@ -177,13 +176,13 @@ public class WanService {
      * @param page page
      * @GET("/lg/collect/list/{page}/json")
      */
-    public static Observable<ResponseData<List<ArticleBean>>> getCollectData(int page) {
+    public static Observable<ResponseData<ArticleListVO>> getCollectData(int page) {
         String url = AppConst.BASE_URL + "lg/collect/list/" + page + "/json";
-        return OkGo.<ResponseData<List<ArticleBean>>>
+        return OkGo.<ResponseData<ArticleListVO>>
                 get(url)
-                .converter(new JsonConvert<ResponseData<List<ArticleBean>>>() {
+                .converter(new JsonConvert<ResponseData<ArticleListVO>>() {
                 })
-                .adapt(new ObservableBody<ResponseData<List<ArticleBean>>>());
+                .adapt(new ObservableBody<ResponseData<ArticleListVO>>());
     }
 
     /**

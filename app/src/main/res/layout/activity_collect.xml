@@ -6,10 +6,17 @@
 
     <include layout="@layout/layout_topbar_nor" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的收藏"
-        />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="30px" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

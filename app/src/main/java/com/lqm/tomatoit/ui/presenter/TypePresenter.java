@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
 import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.model.pojoVO.TypeTagVO;
-import com.lqm.tomatoit.model.pojoVO.TypeVO;
 import com.lqm.tomatoit.ui.adapter.ArticleListAdapter;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.ui.view.TypeView;
@@ -140,14 +140,14 @@ public class TypePresenter extends BasePresenter<TypeView> {
         WanService.getTypeDataById(mCurrentPage,cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<TypeVO>>() {
+                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ResponseData<TypeVO> responseData) {
+                    public void onNext(ResponseData<ArticleListVO> responseData) {
                         if (responseData.getData().getDatas() != null){
                             mAdapter.setNewData(responseData.getData().getDatas());
                             mTypeView.getTagLayout().setVisibility(View.GONE);
@@ -178,13 +178,12 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
     }
 
-    private void setMoreDataView(ResponseData<TypeVO> responseData){
+    private void setMoreDataView(ResponseData<ArticleListVO> responseData){
         if (responseData.getData().getDatas().size() != 0) {
             mAdapter.addData(responseData.getData().getDatas());
+            mAdapter.loadMoreComplete();
         } else {
-            mAdapter.loadComplete();
-            View noDataView = View.inflate(mActivity, R.layout.item_no_data, null);
-            mAdapter.addFooterView(noDataView);
+            mAdapter.loadMoreEnd();
         }
     }
 

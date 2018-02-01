@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
  * desc：文章列表适配器
  */
 
-public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
+public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean,BaseViewHolder> {
 
     private Context mContext;
 
@@ -50,7 +50,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
         tvCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                collectArticle(bean);
+                collectArticle(tvCollect,bean);
             }
         });
 
@@ -64,7 +64,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
     }
 
     //收藏文章
-    private void collectArticle(ArticleBean bean) {
+    private void collectArticle(TextView tvCollect, ArticleBean bean) {
         if (PrefUtils.getBoolean(mContext,"isLogin",false) == false){
             T.showShort(mContext,"请先登录");
             return;
@@ -82,6 +82,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean> {
                     public void onNext(ResponseData<String> responseData) {
                         if (responseData.getErrorCode() == 0){
                             T.showShort(mContext,"收藏成功");
+                            tvCollect.setTextColor(UIUtils.getColor(R.color.main));
                         }else{
                             T.showShort(mContext,responseData.getErrorMsg());
                         }

@@ -2,7 +2,6 @@
     <string name="app_name">TomatoIt</string>
 
 
-
     <!--iconfont字体图标-->
     <string name="tab_left">&#xe620; </string> <!--左对齐-->
     <string name="tab_right">&#xe618; </string> <!--右对齐-->
@@ -15,7 +14,7 @@
     <string name="ic_about">&#xe7ca; </string> <!--关于-->
 
 
-
+    <string name="about_me_tip">玩安卓的非官方客户端,数据均来源于HongYang建立的 www.wanandroid.com.\n\n本项目主要用于学习讨论,技术交流。如果本项目导致您的合法权益受到侵害,请及时与我联系.\n\n本项目完全开源于Github,源码地址为 https://github.com/luqinmao/TomatoIt .</string>
 
 
 </resources>

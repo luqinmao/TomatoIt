@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * desc：第三个模块，用户模块
  */
 
-public class UserFragment extends BaseFragment {
+public class UserFragment extends BaseFragment{
 
     @Bind(R.id.tv_name)
     TextView tvName;
@@ -32,6 +32,9 @@ public class UserFragment extends BaseFragment {
     CardView cvAbout;
     @Bind(R.id.cv_logou)
     CardView cvLogou;
+    @Bind(R.id.tv_logou)
+    TextView tvLogou;
+
 
     public static UserFragment newInstance() {
         return new UserFragment();
@@ -47,6 +50,15 @@ public class UserFragment extends BaseFragment {
         return R.layout.frag_user;
     }
 
+    @Override
+    public void initView(View rootView) {
+        if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
+            tvLogou.setText("点击登录");
+        }else{
+            tvLogou.setText("退出登录");
+        }
+
+    }
 
     @OnClick({R.id.cv_collect, R.id.cv_about, R.id.cv_logou})
     public void onViewClicked(View view) {
@@ -62,14 +74,17 @@ public class UserFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(),AboutActivity.class));
                 break;
             case R.id.cv_logou:
-//                if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
-//
-//
-//                }else{
-//
-//                }
-                startActivity(new Intent(getActivity(),LoginActivity.class));
+                if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }else{
+                    //注销
+                    PrefUtils.setBoolean(getContext(),"isLogin",false);
+                    T.showShort(getContext(),"已注销");
+                    tvLogou.setText("点击登录");
+                }
                 break;
         }
     }
+
+
 }

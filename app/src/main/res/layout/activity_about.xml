@@ -7,9 +7,12 @@
     <include layout="@layout/layout_topbar_nor" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们关于我们"
+        android:autoLink="web"
+        android:textSize="@dimen/text_big_size"
+        android:text="@string/about_me_tip"
+        android:padding="30px"
         />
 
 </LinearLayout>

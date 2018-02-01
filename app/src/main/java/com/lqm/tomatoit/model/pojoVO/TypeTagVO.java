@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * user：lqm
- * desc：分类
+ * desc：分类标签
  */
 
 public class TypeTagVO implements Serializable {
