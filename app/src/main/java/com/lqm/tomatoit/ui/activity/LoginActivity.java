@@ -23,8 +23,8 @@ import butterknife.OnClick;
  * desc：登录注册界面
  */
 
-public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPresenter> implements LoginRegistView {
-
+public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPresenter>
+        implements LoginRegistView {
 
     @Bind(R.id.ic_close)
     IconFontTextView icClose;
@@ -56,6 +56,8 @@ public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPrese
             case R.id.btn_regist:
                 if (TextUtils.isEmpty(etName.getText().toString()) || TextUtils.isEmpty(etPassword.getText().toString())){
                     T.showShort(LoginActivity.this,"用户名和密码不能为空");
+                }else if (etName.getText().toString().length() < 6 || etName.getText().toString().length() <6){
+                    T.showShort(LoginActivity.this,"用户名和密码长度不能小于6位");
                 }else{
                     mPresenter.toRegist(etName.getText().toString(),etPassword.getText().toString());
                 }

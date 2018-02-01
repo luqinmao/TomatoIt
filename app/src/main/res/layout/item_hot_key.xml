@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="68px"
+        android:layout_marginBottom="20px"
+        android:layout_marginLeft="10px"
+        android:layout_marginRight="10px"
+        android:background="@drawable/bg_round_frame_gray"
+        android:gravity="center"
+        android:paddingLeft="40px"
+        android:paddingRight="40px"
+        android:text="热词"
+        android:textColor="@color/text0" />
+
+</LinearLayout>

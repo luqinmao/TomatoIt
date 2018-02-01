@@ -118,23 +118,14 @@ public class WanService {
      * @param k    POST search key
      * @POST("/article/query/{page}/json")
      */
-    public static Observable<ResponseData<List<ArticleBean>>> search(int page) {
+    public static Observable<ResponseData<ArticleListVO>> searchArticle(int page,String key) {
         String url = AppConst.BASE_URL + "article/query/" + page + "/json";
-        return OkGo.<ResponseData<List<ArticleBean>>>post(url)
-                .converter(new JsonConvert<ResponseData<List<ArticleBean>>>() {
+        return OkGo.<ResponseData<ArticleListVO>>post(url)
+                .params("k",key)
+                .converter(new JsonConvert<ResponseData<ArticleListVO>>() {
                 })
-                .adapt(new ObservableBody<ResponseData<List<ArticleBean>>>());
+                .adapt(new ObservableBody<ResponseData<ArticleListVO>>());
     }
-
-    public static Observable<ResponseData<List<HotKeyBean>>> getSearchData(int page, String key) {
-        String url = AppConst.BASE_URL + "article/query/" + page + "/json";
-        return OkGo.<ResponseData<List<HotKeyBean>>>post(url)
-                .params("k", key)
-                .converter(new JsonConvert<ResponseData<List<HotKeyBean>>>() {
-                })
-                .adapt(new ObservableBody<ResponseData<List<HotKeyBean>>>());
-    }
-
 
     /**
      * 登录

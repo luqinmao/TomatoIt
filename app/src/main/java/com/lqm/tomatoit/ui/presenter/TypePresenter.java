@@ -39,7 +39,8 @@ public class TypePresenter extends BasePresenter<TypeView> {
     private List<TypeTagVO> mTagDatas;
     private ArticleListAdapter mAdapter;
     private int mId;
-    private int mTabSelect,mTagSelect;
+    private int mTabSelect; //标记选中的Tab标签
+    private int mTagSelect; //标记选中的Tag标签，用户设置背景色
     private List<TextView> tagTvs;
 
     public TypePresenter(FragmentActivity activity) {

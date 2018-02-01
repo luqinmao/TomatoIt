@@ -27,6 +27,7 @@
         android:layout_marginRight="100px"
         android:maxLines="1"
         android:textColor="@color/white"
+        android:textSize="@dimen/text_big_size"
         />
 
     <com.lqm.tomatoit.widget.IconFontTextView

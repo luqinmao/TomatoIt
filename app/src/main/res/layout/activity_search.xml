@@ -4,12 +4,106 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_topbar_nor" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/topbar_height"
+        android:background="@color/colorPrimary">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="搜索搜索搜索搜索"
-        />
+        <RelativeLayout
+            android:id="@+id/rl_search"
+            android:layout_width="560px"
+            android:layout_height="78px"
+            android:layout_marginBottom="15px"
+            android:layout_marginLeft="50px"
+            android:layout_marginTop="15px"
+            android:background="@drawable/bg_round_frame_gray">
+
+
+            <com.lqm.tomatoit.widget.IconFontTextView
+                android:id="@+id/tv_ic_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40px"
+                android:text="@string/ic_search"
+                android:textSize="40px" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/tv_ic_search"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:hint="请输入关键字"
+                android:paddingLeft="20px"
+                android:paddingRight="30px"
+                android:textColor="@color/text0"
+                android:textColorHint="@color/text3"
+                android:textSize="@dimen/text_medium_size" />
+
+            <com.lqm.tomatoit.widget.IconFontTextView
+                android:id="@+id/tv_clean_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
+                android:text="@string/ic_hot"
+                android:textColor="@color/text1" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30px"
+            android:layout_toRightOf="@id/rl_search"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_big_size" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px"
+        android:layout_marginTop="30px">
+
+
+        <LinearLayout
+            android:id="@+id/ll_hot_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热门搜索"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_big_size"
+                android:textStyle="bold" />
+
+            <com.lqm.tomatoit.widget.AutoLinefeedLayout
+                android:id="@+id/layout_hot_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="30px" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
 </LinearLayout>

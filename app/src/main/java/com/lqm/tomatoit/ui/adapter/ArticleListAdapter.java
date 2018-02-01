@@ -2,6 +2,7 @@ package com.lqm.tomatoit.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
 
     @Override
     protected void convert(final BaseViewHolder holder, final ArticleBean bean) {
-        holder.setText(R.id.tv_title, bean.getTitle())
+        holder.setText(R.id.tv_title, Html.fromHtml(bean.getTitle()))
                 .setText(R.id.tv_author, bean.getAuthor())
                 .setText(R.id.tv_time, bean.getNiceDate())
                 .setText(R.id.tv_type, bean.getChapterName());

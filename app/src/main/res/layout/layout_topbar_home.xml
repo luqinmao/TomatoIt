@@ -14,7 +14,9 @@
             style="@style/topbar_icon_style"
             android:layout_marginRight="20px"
             android:layout_toLeftOf="@+id/tv_search"
-            android:text="@string/ic_hot" />
+            android:text="@string/ic_hot"
+            android:visibility="invisible"
+            />
 
         <com.lqm.tomatoit.widget.IconFontTextView
             android:id="@+id/tv_search"

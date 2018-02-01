@@ -53,12 +53,11 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
     public void initView() {
         tvTitle.setText("我的收藏");
 
-
         rvContent.setLayoutManager(new LinearLayoutManager(CollectActivity.this));
         mAdapter = new CollectArticleAdapter(CollectActivity.this, null);
         rvContent.setAdapter(mAdapter);
         swipeRefresh.setOnRefreshListener(this);
-        mAdapter.setOnLoadMoreListener(this);
+        mAdapter.setOnLoadMoreListener(this,rvContent);
 
         onRefresh();
 
