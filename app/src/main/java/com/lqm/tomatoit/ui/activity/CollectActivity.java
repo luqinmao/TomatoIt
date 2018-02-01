@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.model.pojo.ArticleBean;
-import com.lqm.tomatoit.ui.adapter.ArticleListAdapter;
+import com.lqm.tomatoit.ui.adapter.CollectArticleAdapter;
 import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.presenter.CollectPresenter;
 import com.lqm.tomatoit.ui.view.CollectView;
@@ -37,7 +37,7 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
     RecyclerView rvContent;
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
-    private ArticleListAdapter mAdapter;
+    private CollectArticleAdapter mAdapter;
 
     @Override
     protected CollectPresenter createPresenter() {
@@ -55,7 +55,7 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
 
 
         rvContent.setLayoutManager(new LinearLayoutManager(CollectActivity.this));
-        mAdapter = new ArticleListAdapter(CollectActivity.this, null);
+        mAdapter = new CollectArticleAdapter(CollectActivity.this, null);
         rvContent.setAdapter(mAdapter);
         swipeRefresh.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this);

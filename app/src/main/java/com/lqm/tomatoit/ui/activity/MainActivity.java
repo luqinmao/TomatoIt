@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity {
         mFragments.add(UserFragment.newInstance());
         viewPager.setAdapter(new FragPagerAdapter(getSupportFragmentManager(), mFragments));
         viewPager.setCurrentItem(0, false);
+        viewPager.setOffscreenPageLimit(3);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

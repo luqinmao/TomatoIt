@@ -204,9 +204,10 @@ public class WanService {
      * 取消收藏文章
      *
      * @param id id
-     *           POST("/lg/uncollect/{id}/json")
+     *  POST("/lg/uncollect/{id}/json")
      */
     public static Observable<ResponseData<String>> unCollectArticle(int id) {
+//        String url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
         String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
         return OkGo.<ResponseData<String>>
                 post(url)

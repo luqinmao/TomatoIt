@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
  * desc：文章列表适配器
  */
 
-public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean,BaseViewHolder> {
+public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder> {
 
     private Context mContext;
 
@@ -45,19 +45,25 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean,BaseViewHol
                 .setText(R.id.tv_type, bean.getChapterName());
 
         TextView tvCollect = (TextView) holder.getView(R.id.tv_collect);
-        tvCollect.setTextColor(bean.isCollect() ? UIUtils.getColor(R.color.main) : UIUtils.getColor(R.color.text3));
+        if (bean.isCollect()) {
+            tvCollect.setText(UIUtils.getString(R.string.ic_collect_sel));
+            tvCollect.setTextColor(UIUtils.getColor(R.color.main));
+        } else {
+            tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
+            tvCollect.setTextColor(UIUtils.getColor(R.color.text3));
+        }
 
         tvCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                collectArticle(tvCollect,bean);
+                collectArticle(tvCollect, bean);
             }
         });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.runActivity(mContext,bean.getLink());
+                WebViewActivity.runActivity(mContext, bean.getLink());
             }
         });
 
@@ -65,10 +71,19 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean,BaseViewHol
 
     //收藏文章
     private void collectArticle(TextView tvCollect, ArticleBean bean) {
-        if (PrefUtils.getBoolean(mContext,"isLogin",false) == false){
-            T.showShort(mContext,"请先登录");
+        if (PrefUtils.getBoolean(mContext, "isLogin", false) == false) {
+            T.showShort(mContext, "请先登录");
             return;
         }
+        if (bean.isCollect()) {
+            //已经收藏，点击取消收藏
+            unCollectArticler(bean, tvCollect);
+        } else {
+            collectArticler(bean, tvCollect);
+        }
+    }
+
+    private void collectArticler(ArticleBean bean, TextView tvCollect) {
         WanService.collectArticle(bean.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,18 +95,55 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean,BaseViewHol
 
                     @Override
                     public void onNext(ResponseData<String> responseData) {
-                        if (responseData.getErrorCode() == 0){
-                            T.showShort(mContext,"收藏成功");
+                        if (responseData.getErrorCode() == 0) {
+                            T.showShort(mContext, "收藏成功");
+                            bean.setCollect(true);
+                            tvCollect.setText(UIUtils.getString(R.string.ic_collect_sel));
                             tvCollect.setTextColor(UIUtils.getColor(R.color.main));
-                        }else{
-                            T.showShort(mContext,responseData.getErrorMsg());
+                        } else {
+                            T.showShort(mContext, responseData.getErrorMsg());
                         }
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        T.showShort(mContext,"收藏失败");
+                        T.showShort(mContext, "收藏失败");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void unCollectArticler(ArticleBean bean, TextView tvCollect) {
+        WanService.unCollectArticle(bean.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<String> responseData) {
+                        if (responseData.getErrorCode() == 0) {
+                            T.showShort(mContext, "取消收藏");
+                            bean.setCollect(false);
+                            tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
+                            tvCollect.setTextColor(UIUtils.getColor(R.color.text3));
+                        } else {
+                            T.showShort(mContext, responseData.getErrorMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        T.showShort(mContext, "取消收藏失败");
                     }
 
                     @Override
