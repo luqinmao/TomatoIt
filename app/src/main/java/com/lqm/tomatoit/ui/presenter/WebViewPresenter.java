@@ -78,4 +78,6 @@ public class WebViewPresenter extends BasePresenter<CommonWebView> {
 
         webView.loadUrl(url);
     }
+
+
 }

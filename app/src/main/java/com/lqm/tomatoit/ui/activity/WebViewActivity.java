@@ -12,6 +12,8 @@ import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.presenter.WebViewPresenter;
 import com.lqm.tomatoit.ui.view.CommonWebView;
+import com.lqm.tomatoit.util.UIUtils;
+import com.lqm.tomatoit.widget.CustomPopWindow;
 import com.lqm.tomatoit.widget.IconFontTextView;
 
 import butterknife.Bind;
@@ -39,6 +41,7 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     IconFontTextView tvOther;
 
     private String mUrl;
+    private CustomPopWindow mMorePopWindow;
 
     public static void runActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -78,8 +81,10 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
 
     @Override
     public void initView() {
-        mPresenter.setWebView(mUrl);
+        tvOther.setVisibility(View.VISIBLE);
+        tvOther.setText(UIUtils.getString(R.string.ic_more));
 
+        mPresenter.setWebView(mUrl);
     }
 
     @Override
@@ -110,8 +115,13 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
                    finish();
                 break;
             case R.id.tv_other:
-                //分享按钮
-
+                //更多按钮
+                View popView = View.inflate(WebViewActivity.this,R.layout.popup_webview_more,null);
+                mMorePopWindow= new CustomPopWindow.PopupWindowBuilder(this)
+                        .setView(popView)
+                        .enableBackgroundDark(false) //弹出popWindow时，背景是否变暗
+                        .create()
+                        .showAsDropDown(tvOther,50,-10);
 
                 break;
         }
