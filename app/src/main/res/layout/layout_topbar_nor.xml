@@ -16,6 +16,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:text="@string/ic_return"
+        android:layout_marginLeft="5px"
         />
 
     <TextView

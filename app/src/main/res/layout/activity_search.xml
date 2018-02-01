@@ -49,7 +49,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30px"
-                android:text="@string/ic_hot"
+                android:text="@string/ic_close"
                 android:textColor="@color/text1" />
 
         </RelativeLayout>
