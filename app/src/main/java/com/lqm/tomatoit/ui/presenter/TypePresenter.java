@@ -39,6 +39,8 @@ public class TypePresenter extends BasePresenter<TypeView> {
     private List<TypeTagVO> mTagDatas;
     private ArticleListAdapter mAdapter;
     private int mId;
+    private int mTabSelect,mTagSelect;
+    private List<TextView> tagTvs;
 
     public TypePresenter(FragmentActivity activity) {
         this.mActivity = activity;
@@ -48,31 +50,33 @@ public class TypePresenter extends BasePresenter<TypeView> {
     public void getTagData() {
         mTypeView = getView();
         WanService.getTypeTagData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<List<TypeTagVO>>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<ResponseData<List<TypeTagVO>>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
 
-                    }
+                }
 
-                    @Override
-                    public void onNext(ResponseData<List<TypeTagVO>> responseData) {
-                        mTagDatas = responseData.getData();
-                        setTabUI();
+                @Override
+                public void onNext(ResponseData<List<TypeTagVO>> responseData) {
+                    mTagDatas = responseData.getData();
+                    setTabUI();
+                    mTabSelect = 0;
+                    mTagSelect = 0;
+                    getServerData(mTagDatas.get(0).getChildren().get(0).getId());
+                }
 
-                    }
+                @Override
+                public void onError(Throwable e) {
 
-                    @Override
-                    public void onError(Throwable e) {
+                }
 
-                    }
+                @Override
+                public void onComplete() {
 
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                }
+            });
     }
 
     //一级Tab
@@ -96,7 +100,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                setTagUI(tab.getPosition());
             }
         });
 
@@ -107,29 +111,44 @@ public class TypePresenter extends BasePresenter<TypeView> {
         AutoLinefeedLayout llTag = mTypeView.getTagLayout();
         llTag.setVisibility(View.VISIBLE);
         llTag.removeAllViews();
-        List<TextView> tvs = new ArrayList<>();
+        if (tagTvs == null){
+            tagTvs = new ArrayList<>();
+        }else{
+            tagTvs.clear();
+        }
         for (int i = 0; i < mTagDatas.get(position).getChildren().size(); i++) {
             View view = LinearLayout.inflate(mActivity, R.layout.item_tag_layout, null);
             TextView tvItem = (TextView) view.findViewById(R.id.tv_item);
             tvItem.setText(mTagDatas.get(position).getChildren().get(i).getName());
             llTag.addView(view);
-            tvs.add(tvItem);
+            tagTvs.add(tvItem);
+
             int finalI = i;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    for (TextView textView: tvs) {
-                        textView.setTextColor(UIUtils.getColor(R.color.text1));
-                        textView.setBackgroundResource(R.drawable.shape_tag_nor);
-                    }
+                    //点击某个tag按钮
+                    mTabSelect = position;
+                    mTagSelect = finalI;
                     tvItem.setTextColor(UIUtils.getColor(R.color.white));
                     tvItem.setBackgroundResource(R.drawable.shape_tag_sel);
-
                     mId = mTagDatas.get(position).getChildren().get(finalI).getId();
                     getServerData(mId);
                 }
             });
         }
+
+        //设置选中的tag背景
+        for (int j = 0; j < tagTvs.size(); j++) {
+            if (position == mTabSelect && j == mTagSelect){
+                tagTvs.get(j).setTextColor(UIUtils.getColor(R.color.white));
+                tagTvs.get(j).setBackgroundResource(R.drawable.shape_tag_sel);
+            }else{
+                tagTvs.get(j).setTextColor(UIUtils.getColor(R.color.text0));
+                tagTvs.get(j).setBackgroundResource(R.drawable.shape_tag_nor);
+            }
+        }
+
     }
 
 

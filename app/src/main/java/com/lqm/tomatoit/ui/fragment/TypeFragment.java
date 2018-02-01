@@ -55,7 +55,7 @@ public class TypeFragment extends BaseFragment<TypeView, TypePresenter>
         rvContent.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ArticleListAdapter(getContext(),null);
         rvContent.setAdapter(mAdapter);
-        mAdapter.setOnLoadMoreListener(this);
+        mAdapter.setOnLoadMoreListener(this,rvContent);
 
         mPresenter.getTagData();
     }

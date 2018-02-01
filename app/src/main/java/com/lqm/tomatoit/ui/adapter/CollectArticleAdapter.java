@@ -50,7 +50,7 @@ public class CollectArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseVie
         tvCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                unCollectArticler(holder.getAdapterPosition(),bean);
+                unCollectArticler(holder.getAdapterPosition(), bean);
             }
         });
 
@@ -63,36 +63,37 @@ public class CollectArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseVie
 
     }
 
-    private void unCollectArticler(int adapterPosition, ArticleBean bean) {
+    private void unCollectArticler(int position, ArticleBean bean) {
         WanService.unCollectArticle(bean.getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<String>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<ResponseData<String>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
 
+                }
+
+                @Override
+                public void onNext(ResponseData<String> responseData) {
+                    if (responseData.getErrorCode() == 0) {
+                        T.showShort(mContext, "取消收藏");
+                        getData().remove(position);
+                        notifyItemRemoved(position);
+                    } else {
+                        T.showShort(mContext, responseData.getErrorMsg());
                     }
 
-                    @Override
-                    public void onNext(ResponseData<String> responseData) {
-                        if (responseData.getErrorCode() == 0) {
-                            getData().remove(adapterPosition);
-                            notifyItemRemoved(adapterPosition);
-                        } else {
-                            T.showShort(mContext, responseData.getErrorMsg());
-                        }
-                    }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        T.showShort(mContext, "取消收藏失败");
-                    }
+                @Override
+                public void onError(Throwable e) {
+                    T.showShort(mContext, "取消收藏失败");
+                }
 
-                    @Override
-                    public void onComplete() {
+                @Override
+                public void onComplete() {
 
-                    }
-                });
+                }
+            });
     }
-
 }

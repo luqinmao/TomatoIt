@@ -110,7 +110,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
         mAdapter = new ArticleListAdapter(getContext(),null);
         rvContent.setAdapter(mAdapter);
         swipeRefresh.setOnRefreshListener(this);
-        mAdapter.setOnLoadMoreListener(this);
+        mAdapter.setOnLoadMoreListener(this,rvContent);
 
         //添加头部轮播图布局
         View headView = View.inflate(getActivity(), R.layout.layout_banner, null);
