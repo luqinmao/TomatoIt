@@ -14,10 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lqm.tomatoit.R;
+import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.presenter.WebViewPresenter;
 import com.lqm.tomatoit.ui.view.CommonWebView;
+import com.lqm.tomatoit.util.PrefUtils;
 import com.lqm.tomatoit.util.SharesUtils;
+import com.lqm.tomatoit.util.T;
 import com.lqm.tomatoit.util.UIUtils;
 import com.lqm.tomatoit.widget.CustomPopWindow;
 import com.lqm.tomatoit.widget.IconFontTextView;
@@ -34,6 +37,7 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
         implements CommonWebView {
 
     public static final String WEB_URL = "web_url";
+    public static final String WEB_ARTICLE = "web_article";
 
     @Bind(R.id.progress_bar)
     ProgressBar progressBar;
@@ -45,15 +49,21 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     TextView tvTitle;
     @Bind(R.id.tv_other)
     IconFontTextView tvOther;
+    @Bind(R.id.tv_collect)
+    IconFontTextView tvCollect;
     @Bind(R.id.rl_topbar_layout)
     RelativeLayout rlTopbarLayout;
 
     private String mUrl;
+    private ArticleBean mArticleData;
     private CustomPopWindow mMorePopWindow;
 
-    public static void runActivity(Context context, String url) {
+    public static void runActivity(Context context, String url, ArticleBean articleBean) {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(WEB_URL, url);
+        if (articleBean !=null){
+            intent.putExtra(WEB_ARTICLE, articleBean);
+        }
         context.startActivity(intent);
     }
 
@@ -83,14 +93,49 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     }
 
     @Override
+    public void collectSuccsee() {
+        T.showShort(WebViewActivity.this,"收藏成功");
+        mArticleData.setCollect(true);
+        tvCollect.setText(UIUtils.getString(R.string.ic_collect_sel));
+    }
+
+    @Override
+    public void collectFrail(String errorMsg) {
+        T.showShort(WebViewActivity.this,"收藏失败");
+        mArticleData.setCollect(false);
+        tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
+    }
+
+    @Override
+    public void unCollectSuccsee() {
+        T.showShort(WebViewActivity.this,"取消收藏");
+        mArticleData.setCollect(false);
+        tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
+    }
+
+    @Override
+    public void unCollectFail(String errorMsg) {
+        T.showShort(WebViewActivity.this,"取消失败");
+        mArticleData.setCollect(true);
+        tvCollect.setText(UIUtils.getString(R.string.ic_collect_sel));
+    }
+
+    @Override
     public void init() {
         mUrl = getIntent().getStringExtra(WEB_URL);
+        mArticleData = (ArticleBean) getIntent().getSerializableExtra(WEB_ARTICLE);
     }
 
     @Override
     public void initView() {
-        tvOther.setVisibility(View.VISIBLE);
         tvOther.setText(UIUtils.getString(R.string.ic_more));
+        if (mArticleData == null){
+            tvCollect.setVisibility(View.GONE);
+        }else if (mArticleData != null && mArticleData.isCollect()){
+            tvCollect.setText(UIUtils.getString(R.string.ic_collect_sel));
+        }else if (mArticleData != null && !mArticleData.isCollect()){
+            tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
+        }
 
         mPresenter.setWebView(mUrl);
     }
@@ -109,7 +154,6 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
 //                }
 //            }
 //        });
-//
 //    }
 
     @Override
@@ -133,7 +177,7 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     }
 
 
-    @OnClick({R.id.tv_return, R.id.tv_other})
+    @OnClick({R.id.tv_return, R.id.tv_other,R.id.tv_collect})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
@@ -175,6 +219,18 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
                         mMorePopWindow.dissmiss();
                     }
                 });
+                break;
+            case R.id.tv_collect:
+                if (!PrefUtils.getBoolean(WebViewActivity.this,"isLogin",false)){
+                    T.showShort(WebViewActivity.this,"请先登录");
+                    return;
+                }
+
+                if (mArticleData!= null && mArticleData.isCollect()){
+                    mPresenter.unCollectArticle(mArticleData.getId());
+                }else{
+                    mPresenter.collectArticle(mArticleData.getId());
+                }
                 break;
         }
     }

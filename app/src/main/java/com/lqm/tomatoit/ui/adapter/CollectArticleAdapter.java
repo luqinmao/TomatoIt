@@ -8,19 +8,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lqm.tomatoit.R;
-import com.lqm.tomatoit.api.WanService;
-import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.ui.activity.WebViewActivity;
-import com.lqm.tomatoit.util.T;
 import com.lqm.tomatoit.util.UIUtils;
 
 import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * user：lqm
@@ -46,54 +38,56 @@ public class CollectArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseVie
         TextView tvCollect = (TextView) holder.getView(R.id.tv_collect);
         tvCollect.setText(UIUtils.getString(R.string.ic_collect_sel));
         tvCollect.setTextColor(UIUtils.getColor(R.color.main));
+        tvCollect.setVisibility(View.GONE);
 
-        tvCollect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                unCollectArticler(holder.getAdapterPosition(), bean);
-            }
-        });
+//        tvCollect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                unCollectArticler(holder.getAdapterPosition(), bean);
+//            }
+//        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.runActivity(mContext, bean.getLink());
+                bean.setCollect(true); //我的收藏列表后台接口返回数据中没有collect字段
+                WebViewActivity.runActivity(mContext, bean.getLink(),bean);
             }
         });
 
     }
 
-    private void unCollectArticler(int position, ArticleBean bean) {
-        WanService.unCollectArticle(bean.getId())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<ResponseData<String>>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-
-                }
-
-                @Override
-                public void onNext(ResponseData<String> responseData) {
-                    if (responseData.getErrorCode() == 0) {
-                        T.showShort(mContext, "取消收藏");
-                        getData().remove(position);
-                        notifyItemRemoved(position);
-                    } else {
-                        T.showShort(mContext, responseData.getErrorMsg());
-                    }
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    T.showShort(mContext, "取消收藏失败");
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
-    }
+//    private void unCollectArticler(int position, ArticleBean bean) {
+//        WanService.unCollectArticle(bean.getId())
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(new Observer<ResponseData<String>>() {
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//
+//                }
+//
+//                @Override
+//                public void onNext(ResponseData<String> responseData) {
+//                    if (responseData.getErrorCode() == 0) {
+//                        T.showShort(mContext, "取消收藏");
+//                        getData().remove(position);
+//                        notifyItemRemoved(position);
+//                    } else {
+//                        T.showShort(mContext, responseData.getErrorMsg());
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    T.showShort(mContext, "取消收藏失败");
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//
+//                }
+//            });
+//    }
 }

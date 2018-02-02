@@ -64,7 +64,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.runActivity(mContext, bean.getLink());
+                WebViewActivity.runActivity(mContext, bean.getLink(),bean);
             }
         });
 

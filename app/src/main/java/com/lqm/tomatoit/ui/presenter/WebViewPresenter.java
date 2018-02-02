@@ -9,8 +9,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.lqm.tomatoit.api.WanService;
+import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.ui.view.CommonWebView;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * user：lqm
@@ -80,4 +87,71 @@ public class WebViewPresenter extends BasePresenter<CommonWebView> {
     }
 
 
+    //收藏
+    public void collectArticle(int id) {
+        WanService.collectArticle(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<String> responseData) {
+                        if (responseData.getErrorCode() == 0) {
+                            getView().collectSuccsee();
+                        } else {
+                            getView().collectFrail(responseData.getErrorMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().collectFrail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+    }
+
+    //取消收藏
+    public void unCollectArticle(int id) {
+        WanService.unCollectArticle2(id,-1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<String> responseData) {
+                        if (responseData.getErrorCode() == 0) {
+                            getView().unCollectSuccsee();
+                        } else {
+                            getView().unCollectFail(responseData.getErrorMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().unCollectFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

@@ -196,15 +196,28 @@ public class WanService {
      *
      * @param id id
      *  POST("/lg/uncollect/{id}/json")
+     *  http://www.wanandroid.com/lg/uncollect/99/json
+     *           POST 参数：originId:1165，没有则写-1
      */
     public static Observable<ResponseData<String>> unCollectArticle(int id) {
-//        String url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
-        String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
+        String url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
+//        String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
         return OkGo.<ResponseData<String>>
                 post(url)
+                .params("originId",-1)
                 .converter(new JsonConvert<ResponseData<String>>() {
                 })
                 .adapt(new ObservableBody<ResponseData<String>>());
     }
 
+    public static Observable<ResponseData<String>> unCollectArticle2(int id,int originId) {
+        String url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
+//        String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
+        return OkGo.<ResponseData<String>>
+                post(url)
+                .params("originId",-1)
+                .converter(new JsonConvert<ResponseData<String>>() {
+                })
+                .adapt(new ObservableBody<ResponseData<String>>());
+    }
 }

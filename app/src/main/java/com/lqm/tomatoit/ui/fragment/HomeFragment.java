@@ -87,7 +87,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
         mBannerView.setDelegate(new BGABanner.Delegate<View, BannerBean>() {
             @Override
             public void onBannerItemClick(BGABanner banner, View itemView, BannerBean model, int position) {
-                WebViewActivity.runActivity(getContext(),model.getUrl());
+                WebViewActivity.runActivity(getContext(),model.getUrl(),null);
 
             }
         });
