@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoRelativeLayout
+<RelativeLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="@dimen/topbar_height"
       android:orientation="horizontal"
-     android:gravity="center_vertical"
-    android:background="@color/colorPrimary"
+      android:gravity="center_vertical"
+      android:background="@color/colorPrimary"
+      android:id="@+id/rl_topbar_layout"
     >
 
     <com.lqm.tomatoit.widget.IconFontTextView
@@ -47,4 +48,4 @@
         android:layout_alignParentBottom="true"
         />
 
-</com.zhy.autolayout.AutoRelativeLayout>
+</RelativeLayout>

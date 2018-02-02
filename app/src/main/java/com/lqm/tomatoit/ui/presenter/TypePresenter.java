@@ -42,6 +42,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
     private int mTabSelect; //标记选中的Tab标签
     private int mTagSelect; //标记选中的Tag标签，用户设置背景色
     private List<TextView> tagTvs;
+    private AutoLinefeedLayout llTag;
 
     public TypePresenter(FragmentActivity activity) {
         this.mActivity = activity;
@@ -101,7 +102,11 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                setTagUI(tab.getPosition());
+                if (llTag != null && llTag.getVisibility() == View.VISIBLE){
+                    llTag.setVisibility(View.GONE);
+                }else{
+                    setTagUI(tab.getPosition());
+                }
             }
         });
 
@@ -109,7 +114,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
     //二级Tag
     private void setTagUI(int position) {
-        AutoLinefeedLayout llTag = mTypeView.getTagLayout();
+        llTag = mTypeView.getTagLayout();
         llTag.setVisibility(View.VISIBLE);
         llTag.removeAllViews();
         if (tagTvs == null){

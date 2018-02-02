@@ -52,12 +52,14 @@ public class UserFragment extends BaseFragment{
 
     @Override
     public void initView(View rootView) {
+
         if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
             tvLogou.setText("点击登录");
+            tvName.setText("暂未登录");
         }else{
+            tvName.setText(PrefUtils.getString(getContext(),"userName","暂未登录"));
             tvLogou.setText("退出登录");
         }
-
     }
 
     @OnClick({R.id.cv_collect, R.id.cv_about, R.id.cv_logou})

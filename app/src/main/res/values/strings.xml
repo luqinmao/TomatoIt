@@ -19,6 +19,11 @@
     <string name="ic_more">&#xe62b; </string> <!--更多-->
 
 
+    //
+    <string name="action_share">分享</string>
+    <string name="copy_link">复制链接</string>
+    <string name="copy_link_success">已复制链接</string>
+
 
     <string name="about_me_tip">玩安卓的非官方客户端,数据均来源于HongYang建立的 www.wanandroid.com.\n\n本项目主要用于学习讨论,技术交流。如果本项目导致您的合法权益受到侵害,请及时与我联系.\n\n本项目完全开源于Github,源码地址为 https://github.com/luqinmao/TomatoIt .</string>
 

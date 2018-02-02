@@ -1,17 +1,23 @@
 package com.lqm.tomatoit.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.presenter.WebViewPresenter;
 import com.lqm.tomatoit.ui.view.CommonWebView;
+import com.lqm.tomatoit.util.SharesUtils;
 import com.lqm.tomatoit.util.UIUtils;
 import com.lqm.tomatoit.widget.CustomPopWindow;
 import com.lqm.tomatoit.widget.IconFontTextView;
@@ -39,6 +45,8 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     TextView tvTitle;
     @Bind(R.id.tv_other)
     IconFontTextView tvOther;
+    @Bind(R.id.rl_topbar_layout)
+    RelativeLayout rlTopbarLayout;
 
     private String mUrl;
     private CustomPopWindow mMorePopWindow;
@@ -87,6 +95,23 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
         mPresenter.setWebView(mUrl);
     }
 
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+//    @Override
+//    public void initListener() {
+//        //上滑隐藏topbar
+//        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                if (scrollY > oldScrollY){
+//                    rlTopbarLayout.setVisibility(View.GONE);
+//                }else{
+//                    rlTopbarLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+//
+//    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -121,8 +146,35 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
                         .setView(popView)
                         .enableBackgroundDark(false) //弹出popWindow时，背景是否变暗
                         .create()
-                        .showAsDropDown(tvOther,50,-10);
+                        .showAsDropDown(tvOther,-430,-10);
 
+                //分享
+                popView.findViewById(R.id.tv_shape).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharesUtils.share(WebViewActivity.this, webView.getUrl());
+                        mMorePopWindow.dissmiss();
+                    }
+                });
+                //复制链接
+                popView.findViewById(R.id.tv_copy_link).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager cmd = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        cmd.setPrimaryClip(ClipData.newPlainText(getString(R.string.copy_link), webView.getUrl()));
+                        Snackbar.make(getWindow().getDecorView(), R.string.copy_link_success, Snackbar.LENGTH_SHORT).show();
+                        mMorePopWindow.dissmiss();
+                    }
+                });
+                //使用系统浏览器打开
+                popView.findViewById(R.id.tv_open_out).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webView.getUrl()));
+                        startActivity(intent);
+                        mMorePopWindow.dissmiss();
+                    }
+                });
                 break;
         }
     }

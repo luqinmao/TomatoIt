@@ -88,6 +88,7 @@ public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPrese
     @Override
     public void loginSuccess(UserBean user) {
         PrefUtils.setBoolean(LoginActivity.this,"isLogin",true);
+        PrefUtils.setString(LoginActivity.this,"userName",etName.getText().toString());
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
         finish();
     }
@@ -96,6 +97,7 @@ public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPrese
     public void registerSuccess(UserBean user) {
         T.showShort(LoginActivity.this,"注册成功");
         PrefUtils.setBoolean(LoginActivity.this,"isLogin",true);
+        PrefUtils.setString(LoginActivity.this,"userName",etName.getText().toString());
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
         finish();
     }

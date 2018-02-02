@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/text5"
+    android:background="@drawable/shape_bg_round_white"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_shape"
         android:layout_width="380px"
         android:layout_height="90px"
         android:gravity="center"
@@ -13,7 +14,12 @@
         android:textColor="@color/text0"
         android:textSize="@dimen/text_big_size" />
 
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white"/>
+
     <TextView
+        android:id="@+id/tv_copy_link"
         android:layout_width="380px"
         android:layout_height="90px"
         android:gravity="center"
@@ -21,8 +27,12 @@
         android:textColor="@color/text0"
         android:textSize="@dimen/text_big_size" />
 
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white"/>
+
     <TextView
-        android:id="@+id/tv_collect"
+        android:id="@+id/tv_open_out"
         android:layout_width="380px"
         android:layout_height="90px"
         android:gravity="center"
