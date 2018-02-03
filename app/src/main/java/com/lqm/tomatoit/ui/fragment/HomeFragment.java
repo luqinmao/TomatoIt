@@ -55,6 +55,7 @@ public class HomeFragment extends BaseFragment<HomeView, HomePresenter>
 
     @Override
     public void onRefresh() {
+        mPresenter.getBannerData();
         mPresenter.getRefreshData();
     }
 

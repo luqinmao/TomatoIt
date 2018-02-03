@@ -3,13 +3,13 @@ package com.lqm.tomatoit.api;
 import com.lqm.tomatoit.app.AppConst;
 import com.lqm.tomatoit.helper.JsonConvert;
 import com.lqm.tomatoit.model.ResponseData;
-import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.model.pojo.BannerBean;
 import com.lqm.tomatoit.model.pojo.HotKeyBean;
 import com.lqm.tomatoit.model.pojo.UserBean;
 import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.model.pojoVO.TypeTagVO;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okrx2.adapter.ObservableBody;
 
 import java.util.List;
@@ -38,6 +38,7 @@ public class WanService {
      */
     public static Observable<ResponseData<List<BannerBean>>> getBannerData() {
         return OkGo.<ResponseData<List<BannerBean>>>get(homeBannerData)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                 .converter(new JsonConvert<ResponseData<List<BannerBean>>>() {
                 })
                 .adapt(new ObservableBody<ResponseData<List<BannerBean>>>());
@@ -53,6 +54,7 @@ public class WanService {
     public static Observable<ResponseData<ArticleListVO>> getHomeData(int page) {
         String url = AppConst.BASE_URL + "article/list/" + page + "/json";
         return OkGo.<ResponseData<ArticleListVO>>get(url)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)  //使用缓存
                 .converter(new JsonConvert<ResponseData<ArticleListVO>>() {
                 })
                 .adapt(new ObservableBody<ResponseData<ArticleListVO>>());
