@@ -4,6 +4,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,6 +32,8 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
     IconFontTextView tvReturn;
     @Bind(R.id.tv_title)
     TextView tvTitle;
+    @Bind(R.id.tv_no_collect)
+    TextView tvNoCollect;
     @Bind(R.id.tv_other)
     IconFontTextView tvOther;
     @Bind(R.id.rv_content)
@@ -83,6 +86,7 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
     @Override
     public void onRefreshSuccess(List<ArticleBean> data) {
         mAdapter.setNewData(data);
+        tvNoCollect.setVisibility(data.size() ==0? View.VISIBLE:View.GONE);
     }
 
     @Override

@@ -11,11 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="30px" />
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="30px" />
+
+            <TextView
+                android:id="@+id/tv_no_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="~~ 没有收藏数据 ~~"
+                android:textColor="@color/text2"
+                android:textSize="@dimen/text_big_size"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -197,27 +197,40 @@ public class WanService {
      * @param id id
      *  POST("/lg/uncollect/{id}/json")
      *  http://www.wanandroid.com/lg/uncollect/99/json
-     *           POST 参数：originId:1165，没有则写-1
+     *  POST 参数：originId:1165，没有则写-1
+     *           (注意获取首页接口的时候接口没有返回originId字段，获取我的收藏接口的时候有返回originId字段，
+     *            收藏接口的id 跟 首页接口的id 是不一样的，收藏接口的originId 跟首页接口的id 一样，
+     *            这个接口有点神奇啊，url也不一样)
      */
-    public static Observable<ResponseData<String>> unCollectArticle(int id) {
-        String url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
-//        String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
+    public static Observable<ResponseData<String>> unCollectArticle(int id,int originId, boolean hasOriginId) {
+        String url;
+        if (hasOriginId){
+            url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
+        }else{
+            url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
+        }
+
+        if (originId == 0){
+            originId = -1;
+        }
         return OkGo.<ResponseData<String>>
                 post(url)
-                .params("originId",-1)
+                .params("originId",originId)
                 .converter(new JsonConvert<ResponseData<String>>() {
                 })
                 .adapt(new ObservableBody<ResponseData<String>>());
     }
 
-    public static Observable<ResponseData<String>> unCollectArticle2(int id,int originId) {
-        String url = AppConst.BASE_URL + "lg/uncollect/" + id + "/json";
-//        String url = AppConst.BASE_URL + "lg/uncollect_originId/" + id + "/json";
-        return OkGo.<ResponseData<String>>
-                post(url)
-                .params("originId",-1)
-                .converter(new JsonConvert<ResponseData<String>>() {
-                })
-                .adapt(new ObservableBody<ResponseData<String>>());
-    }
+//    public static Observable<ResponseData<String>> unCollectArticle2(int id,int originId) {
+//
+//        if (originId == 0){
+//            originId = -1;
+//        }
+//        return OkGo.<ResponseData<String>>
+//                post(url)
+//                .params("originId",originId)
+//                .converter(new JsonConvert<ResponseData<String>>() {
+//                })
+//                .adapt(new ObservableBody<ResponseData<String>>());
+//    }
 }

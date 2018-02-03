@@ -34,6 +34,7 @@ public class ArticleBean implements Serializable {
     private String link;
     private String author;
     private Object origin;
+    private int originId;
     private long publishTime;
     private Object zan;
     private Object desc;
@@ -104,6 +105,14 @@ public class ArticleBean implements Serializable {
 
     public void setOrigin(Object origin) {
         this.origin = origin;
+    }
+
+    public int getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(int originId) {
+        this.originId = originId;
     }
 
     public long getPublishTime() {

@@ -64,7 +64,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.runActivity(mContext, bean.getLink(),bean);
+                WebViewActivity.runActivity(mContext, bean.getLink());
             }
         });
 
@@ -120,7 +120,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
     }
 
     private void unCollectArticler(ArticleBean bean, TextView tvCollect) {
-        WanService.unCollectArticle(bean.getId())
+        WanService.unCollectArticle(bean.getId(),bean.getOriginId(),false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<String>>() {

@@ -14,11 +14,4 @@ public interface CommonWebView {
     WebView getWebView();
     void setTitle(String title);
 
-    void collectSuccsee();
-
-    void collectFrail(String errorMsg);
-
-    void unCollectSuccsee();
-
-    void unCollectFail(String errorMsg);
 }

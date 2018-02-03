@@ -78,7 +78,9 @@
                 android:layout_alignTop="@id/tv_type"
                 android:text="@string/ic_collect_nor"
                 android:textColor="@color/text3"
-                android:textSize="50px" />
+                android:textSize="50px"
+
+                />
 
 
         </RelativeLayout>

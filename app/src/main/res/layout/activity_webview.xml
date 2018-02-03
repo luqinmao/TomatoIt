@@ -4,7 +4,51 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_topbar_nor"/>
+    <RelativeLayout
+        android:id="@+id/rl_topbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/topbar_height"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.lqm.tomatoit.widget.IconFontTextView
+            android:id="@+id/tv_return"
+            android:layout_width="@dimen/topbar_icon_width_height"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5px"
+            android:gravity="center"
+            android:text="@string/ic_return"
+            android:textColor="@color/white"
+            android:textSize="@dimen/top_icon_size" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="120px"
+            android:layout_marginRight="120px"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_big_size" />
+
+        <com.lqm.tomatoit.widget.IconFontTextView
+            android:id="@+id/tv_other"
+            android:layout_width="@dimen/topbar_icon_width_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/ic_share"
+            android:textColor="@color/white"
+            android:textSize="55px"
+            android:visibility="visible" />
+
+        <View
+            style="@style/lineStyle"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -12,14 +56,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:minHeight="6px"
         android:indeterminateDrawable="@color/main"
-        android:progressDrawable="@drawable/progress_bar_status"
-        />
+        android:minHeight="6px"
+        android:progressDrawable="@drawable/progress_bar_status" />
 
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

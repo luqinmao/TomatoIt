@@ -2,39 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_height="wrap_content">
 
-        <com.lqm.tomatoit.widget.RoundImageView
-            android:id="@+id/iv_photo"
-            android:layout_width="200px"
-            android:layout_height="200px"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60px"
-            android:src="@mipmap/ic_photo"
-            app:type="circle" />
+        <LinearLayout
+            android:id="@+id/ll_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="420px"
+            android:background="@mipmap/bg_user"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户名"
-            android:textColor="@color/text0"
-            android:textSize="@dimen/text_big_size"
-            android:textStyle="bold"
-            android:layout_marginTop="20px"
-            />
+            <com.lqm.tomatoit.widget.RoundImageView
+                android:id="@+id/iv_photo"
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60px"
+                android:src="@mipmap/ic_photo"
+                app:type="circle" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:text="用户名"
+                android:textColor="@color/text0"
+                android:textSize="@dimen/text_big_size"
+                android:textStyle="bold" />
 
+        </LinearLayout>
+
+        <com.lqm.tomatoit.widget.DynamicWave
+            android:id="@+id/dynamicWave"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_alignBottom="@id/ll_user_info" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv_collect"
