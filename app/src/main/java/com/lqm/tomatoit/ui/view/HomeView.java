@@ -15,7 +15,7 @@ public interface HomeView {
     void showRefreshView(Boolean refresh);
     void getBannerDataSuccess(List<BannerBean> data);
     void getDataError(String message);
-    void getMoreDataSuccess(List<ArticleBean> data);
     void getRefreshDataSuccess(List<ArticleBean> data);
+    void getMoreDataSuccess(List<ArticleBean> data);
 
 }

@@ -1,6 +1,5 @@
 package com.lqm.tomatoit.ui.presenter;
 
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -174,7 +173,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
                     @Override
                     public void onNext(ResponseData<ArticleListVO> responseData) {
                         if (responseData.getData().getDatas() != null){
-                            mAdapter.setNewData(responseData.getData().getDatas());
+                            getView().getRefreshDataSuccess(responseData.getData().getDatas());
                             mTypeView.getTagLayout().setVisibility(View.GONE);
                         }
 
@@ -182,12 +181,12 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        showError(e);
+                        getView().getDataError(e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        mAdapter.removeAllFooterView();
+
                     }
                 });
 
@@ -199,22 +198,29 @@ public class TypePresenter extends BasePresenter<TypeView> {
         WanService.getTypeDataById(mCurrentPage,mId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(responseData -> setMoreDataView(responseData),this::showError);
+                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<ArticleListVO> responseData) {
+                        getView().getMoreDataSuccess(responseData.getData().getDatas());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().getDataError(e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 
-    private void setMoreDataView(ResponseData<ArticleListVO> responseData){
-        if (responseData.getData().getDatas().size() != 0) {
-            mAdapter.addData(responseData.getData().getDatas());
-            mAdapter.loadMoreComplete();
-        } else {
-            mAdapter.loadMoreEnd();
-        }
-    }
-
-
-
-    private void showError(Throwable e){
-        Snackbar.make(mTypeView.getRecyclerView(), e.getMessage() + "", Snackbar.LENGTH_SHORT).show();
-    }
 }
