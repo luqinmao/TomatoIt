@@ -25,16 +25,24 @@ public class WebViewPresenter extends BasePresenter<CommonWebView> {
         this.activity = activity;
     }
 
-    public void setWebView(String url) {
+    public void setWebView(WebView webView,String url) {
 
         CommonWebView urlView = getView();
         ProgressBar progressBar = urlView.getProgressBar();
-        WebView webView = urlView.getWebView();
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);// 支持JS
         settings.setBuiltInZoomControls(true);// 显示放大缩小按钮
         settings.setUseWideViewPort(true);// 支持双击放大缩小
+        settings.setSupportZoom(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setDefaultTextEncodingName("utf-8");
+        settings.setLoadsImagesAutomatically(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        settings.setAppCacheEnabled(true);
+        settings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

@@ -1,6 +1,5 @@
 package com.lqm.tomatoit.ui.view;
 
-import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 /**
@@ -11,7 +10,6 @@ import android.widget.ProgressBar;
 public interface CommonWebView {
 
     ProgressBar getProgressBar();
-    WebView getWebView();
     void setTitle(String title);
 
 }

@@ -1,68 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rl_topbar_layout"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/topbar_height"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <com.lqm.tomatoit.widget.IconFontTextView
-            android:id="@+id/tv_return"
-            android:layout_width="@dimen/topbar_icon_width_height"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5px"
-            android:gravity="center"
-            android:text="@string/ic_return"
-            android:textColor="@color/white"
-            android:textSize="@dimen/top_icon_size" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="120px"
-            android:layout_marginRight="120px"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_big_size" />
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways">
 
-        <com.lqm.tomatoit.widget.IconFontTextView
-            android:id="@+id/tv_other"
-            android:layout_width="@dimen/topbar_icon_width_height"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="@string/ic_share"
-            android:textColor="@color/white"
-            android:textSize="55px"
-            android:visibility="visible" />
+            <RelativeLayout
+                android:id="@+id/rl_topbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/topbar_height"
+                android:background="@color/colorPrimary">
 
-        <View
-            style="@style/lineStyle"
-            android:layout_alignParentBottom="true" />
+                <com.lqm.tomatoit.widget.IconFontTextView
+                    android:id="@+id/tv_return"
+                    android:layout_width="@dimen/topbar_icon_width_height"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5px"
+                    android:gravity="center"
+                    android:text="@string/ic_return"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/top_icon_size" />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="120px"
+                    android:layout_marginRight="120px"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_big_size" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                <com.lqm.tomatoit.widget.IconFontTextView
+                    android:id="@+id/tv_other"
+                    android:layout_width="@dimen/topbar_icon_width_height"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:text="@string/ic_share"
+                    android:textColor="@color/white"
+                    android:textSize="55px"
+                    android:visibility="visible" />
+
+                <View
+                    style="@style/lineStyle"
+                    android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="false"
-        android:indeterminateDrawable="@color/main"
-        android:minHeight="6px"
-        android:progressDrawable="@drawable/progress_bar_status" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <WebView
-        android:id="@+id/web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@color/main"
+            android:minHeight="6px"
+            android:progressDrawable="@drawable/progress_bar_status" />
 
-</LinearLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/webview_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

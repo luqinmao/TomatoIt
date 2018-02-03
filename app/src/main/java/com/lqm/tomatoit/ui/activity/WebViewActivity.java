@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -17,10 +18,12 @@ import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.presenter.WebViewPresenter;
 import com.lqm.tomatoit.ui.view.CommonWebView;
+import com.lqm.tomatoit.util.ActivityUtils;
 import com.lqm.tomatoit.util.SharesUtils;
 import com.lqm.tomatoit.util.UIUtils;
 import com.lqm.tomatoit.widget.CustomPopWindow;
 import com.lqm.tomatoit.widget.IconFontTextView;
+import com.lqm.tomatoit.widget.WebViewFragment;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -28,18 +31,16 @@ import butterknife.OnClick;
 /**
  * user：lqm
  * desc：WebView界面，加载文章详情等
+ * (tip:上滑隐藏topbar,因为webview焦点问题，这里在布局中用NestedScrollView，再动态添加webview)
  */
 
 public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresenter>
         implements CommonWebView {
 
     public static final String WEB_URL = "web_url";
-    public static final String WEB_ARTICLE = "web_article";
 
     @Bind(R.id.progress_bar)
     ProgressBar progressBar;
-    @Bind(R.id.web_view)
-    WebView webView;
     @Bind(R.id.tv_return)
     IconFontTextView tvReturn;
     @Bind(R.id.tv_title)
@@ -48,9 +49,14 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     IconFontTextView tvOther;
     @Bind(R.id.rl_topbar_layout)
     RelativeLayout rlTopbarLayout;
+    @Bind(R.id.webview_container)
+    NestedScrollView webViewContainer;
+
 
     private String mUrl;
     private CustomPopWindow mMorePopWindow;
+    private WebViewFragment mWebViewFragment;
+    private WebView webView;
 
     public static void runActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -74,11 +80,6 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     }
 
     @Override
-    public WebView getWebView() {
-        return webView;
-    }
-
-    @Override
     public void setTitle(String title) {
         tvTitle.setText(title);
     }
@@ -91,24 +92,20 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
     @Override
     public void initView() {
         tvOther.setText(UIUtils.getString(R.string.ic_more));
-        mPresenter.setWebView(mUrl);
+
+        mWebViewFragment = new WebViewFragment();
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mWebViewFragment, R.id.webview_container);
+
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.M)
-//    @Override
-//    public void initListener() {
-//        //上滑隐藏topbar
-//        webView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                if (scrollY > oldScrollY){
-//                    rlTopbarLayout.setVisibility(View.GONE);
-//                }else{
-//                    rlTopbarLayout.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //获取webview
+        webView = mWebViewFragment.getWebView();
+        mPresenter.setWebView(webView, mUrl);
+    }
 
     @Override
     protected void onDestroy() {
@@ -118,7 +115,7 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (webView.canGoBack()) {
                 webView.goBack();
                 return true;
@@ -132,19 +129,20 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
 
 
     @OnClick({R.id.tv_return, R.id.tv_other})
+
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_return:
-                   finish();
+                finish();
                 break;
             case R.id.tv_other:
                 //更多按钮
-                View popView = View.inflate(WebViewActivity.this,R.layout.popup_webview_more,null);
-                mMorePopWindow= new CustomPopWindow.PopupWindowBuilder(this)
+                View popView = View.inflate(WebViewActivity.this, R.layout.popup_webview_more, null);
+                mMorePopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                         .setView(popView)
                         .enableBackgroundDark(false) //弹出popWindow时，背景是否变暗
                         .create()
-                        .showAsDropDown(tvOther,-430,-10);
+                        .showAsDropDown(tvOther, -430, -10);
 
                 //分享
                 popView.findViewById(R.id.tv_shape).setOnClickListener(new View.OnClickListener() {
