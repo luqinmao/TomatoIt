@@ -84,6 +84,7 @@ public class UserFragment extends BaseFragment{
                     PrefUtils.setBoolean(getContext(),AppConst.IS_LOGIN_KEY,false);
                     T.showShort(getContext(),"已注销");
                     tvLogou.setText("点击登录");
+                    tvName.setText("暂未登录");
                 }
                 break;
         }

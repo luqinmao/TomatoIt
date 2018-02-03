@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TomatoIt</string>
+    <string name="app_name">玩Android</string>
 
 
     <!--iconfont字体图标-->
@@ -25,7 +25,10 @@
     <string name="copy_link_success">已复制链接</string>
 
 
-    <string name="about_me_tip">玩安卓的非官方客户端,数据均来源于HongYang建立的 www.wanandroid.com.\n\n本项目主要用于学习讨论,技术交流。如果本项目导致您的合法权益受到侵害,请及时与我联系.\n\n本项目完全开源于Github,源码地址为 https://github.com/luqinmao/TomatoIt .</string>
-
+    <string name="about_me_tip">
+        项目所用到的接口为鸿洋大神建立的玩安卓网站提供： www.wanandroid.com. \n\n
+        本项目源码地址为 https://github.com/luqinmao/TomatoIt. \n\n 哈哈，如果觉得可以的话给个start吧！\n\n
+        项目主要技术框架技术： \n\n okgo+ rxjava+mvp
+    </string>
 
 </resources>

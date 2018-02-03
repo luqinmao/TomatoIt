@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/layout_topbar_nor" />
 
+
+    <com.lqm.tomatoit.widget.RoundImageView
+        android:layout_width="180px"
+        android:layout_height="180px"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="50px"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_photo"
+        app:type="circle" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="web"
-        android:textSize="@dimen/text_big_size"
-        android:text="@string/about_me_tip"
         android:padding="30px"
-        />
+        android:text="@string/about_me_tip"
+        android:textSize="@dimen/text_big_size" />
 
 </LinearLayout>

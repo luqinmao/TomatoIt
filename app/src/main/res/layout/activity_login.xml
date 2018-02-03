@@ -15,8 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/ic_return"
-            android:textColor="@color/text0"
+            android:text="@string/ic_close"
+            android:textColor="@color/text1"
             android:textSize="@dimen/top_icon_size" />
 
         <com.lqm.tomatoit.widget.RoundImageView
@@ -73,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:inputType="numberPassword"
             android:layout_toRightOf="@id/tv_password" />
     </RelativeLayout>
 
@@ -90,7 +91,8 @@
             android:layout_weight="1"
             android:text="注册"
             android:textColor="@color/text0"
-            android:textSize="@dimen/text_big_size" />
+            android:textSize="@dimen/text_big_size"
+            />
 
         <Button
             android:id="@+id/btn_login"

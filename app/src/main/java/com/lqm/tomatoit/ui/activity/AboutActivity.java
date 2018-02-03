@@ -16,6 +16,7 @@ import butterknife.OnClick;
  */
 
 public class AboutActivity extends BaseActivity {
+
     @Bind(R.id.tv_return)
     IconFontTextView tvReturn;
     @Bind(R.id.tv_title)
@@ -36,7 +37,6 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         tvTitle.setText("关于我们");
-
     }
 
     @OnClick(R.id.tv_return)
