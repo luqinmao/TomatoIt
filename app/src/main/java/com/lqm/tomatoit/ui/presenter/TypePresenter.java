@@ -212,6 +212,8 @@ public class TypePresenter extends BasePresenter<TypeView> {
         }
     }
 
+
+
     private void showError(Throwable e){
         Snackbar.make(mTypeView.getRecyclerView(), e.getMessage() + "", Snackbar.LENGTH_SHORT).show();
     }
