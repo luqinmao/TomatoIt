@@ -90,13 +90,6 @@ public class WanService {
                 .adapt(new ObservableBody<ResponseData<ArticleListVO>>());
     }
 
-
-    /**
-     * 常用网站
-     * http://www.wanandroid.com/friend/json
-     * @GET("/friend/json")
-     */
-
     /**
      * 大家都在搜
      * http://www.wanandroid.com/hotkey/json
@@ -113,7 +106,6 @@ public class WanService {
     /**
      * 搜索
      * http://www.wanandroid.com/article/query/0/json
-     *
      * @param page page
      * @param k    POST search key
      * @POST("/article/query/{page}/json")
@@ -129,7 +121,6 @@ public class WanService {
 
     /**
      * 登录
-     *
      * @param username username
      * @param password password
      * @POST("/user/login")
@@ -220,17 +211,4 @@ public class WanService {
                 })
                 .adapt(new ObservableBody<ResponseData<String>>());
     }
-
-//    public static Observable<ResponseData<String>> unCollectArticle2(int id,int originId) {
-//
-//        if (originId == 0){
-//            originId = -1;
-//        }
-//        return OkGo.<ResponseData<String>>
-//                post(url)
-//                .params("originId",originId)
-//                .converter(new JsonConvert<ResponseData<String>>() {
-//                })
-//                .adapt(new ObservableBody<ResponseData<String>>());
-//    }
 }

@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
+import com.lqm.tomatoit.app.AppConst;
 import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.ui.activity.WebViewActivity;
@@ -72,7 +73,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
 
     //收藏文章
     private void collectArticle(TextView tvCollect, ArticleBean bean) {
-        if (PrefUtils.getBoolean(mContext, "isLogin", false) == false) {
+        if (PrefUtils.getBoolean(mContext, AppConst.IS_LOGIN_KEY, false) == false) {
             T.showShort(mContext, "请先登录");
             return;
         }
@@ -120,7 +121,7 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
     }
 
     private void unCollectArticler(ArticleBean bean, TextView tvCollect) {
-        WanService.unCollectArticle(bean.getId(),bean.getOriginId(),false)
+        WanService.unCollectArticle(bean.getId(), bean.getOriginId(), false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<String>>() {

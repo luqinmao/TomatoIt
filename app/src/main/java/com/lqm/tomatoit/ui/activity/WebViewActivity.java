@@ -66,7 +66,7 @@ public class WebViewActivity extends BaseActivity<CommonWebView, WebViewPresente
 
     @Override
     protected WebViewPresenter createPresenter() {
-        return new WebViewPresenter(this);
+        return new WebViewPresenter();
     }
 
     @Override

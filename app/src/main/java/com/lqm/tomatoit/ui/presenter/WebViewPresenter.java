@@ -1,6 +1,5 @@
 package com.lqm.tomatoit.ui.presenter;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -18,12 +17,6 @@ import com.lqm.tomatoit.ui.view.CommonWebView;
  */
 
 public class WebViewPresenter extends BasePresenter<CommonWebView> {
-
-    private Activity activity;
-
-    public WebViewPresenter(Activity activity) {
-        this.activity = activity;
-    }
 
     public void setWebView(WebView webView,String url) {
 

@@ -26,7 +26,7 @@ public class App extends Application {
 
     public static List<Activity> activities = new LinkedList<>();
 
-    private static Context mContext;//上下文
+    private static Context mContext;
 
     @Override
     public void onCreate() {

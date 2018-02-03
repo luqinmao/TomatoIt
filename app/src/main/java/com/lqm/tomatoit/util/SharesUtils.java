@@ -9,7 +9,7 @@ import com.lqm.tomatoit.R;
 
 /**
  * autour: lqm
- * desc: 系统分享
+ * desc: 系统自带的分享
  */
 
 public class SharesUtils {

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.lqm.tomatoit.R;
+import com.lqm.tomatoit.app.AppConst;
 import com.lqm.tomatoit.model.pojo.UserBean;
 import com.lqm.tomatoit.ui.base.BaseActivity;
 import com.lqm.tomatoit.ui.presenter.LoginRegistPresenter;
@@ -87,8 +88,8 @@ public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPrese
 
     @Override
     public void loginSuccess(UserBean user) {
-        PrefUtils.setBoolean(LoginActivity.this,"isLogin",true);
-        PrefUtils.setString(LoginActivity.this,"userName",etName.getText().toString());
+        PrefUtils.setBoolean(LoginActivity.this,AppConst.IS_LOGIN_KEY,true);
+        PrefUtils.setString(LoginActivity.this,AppConst.USERNAME_KEY,etName.getText().toString());
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
         finish();
     }
@@ -96,8 +97,8 @@ public class LoginActivity extends BaseActivity<LoginRegistView,LoginRegistPrese
     @Override
     public void registerSuccess(UserBean user) {
         T.showShort(LoginActivity.this,"注册成功");
-        PrefUtils.setBoolean(LoginActivity.this,"isLogin",true);
-        PrefUtils.setString(LoginActivity.this,"userName",etName.getText().toString());
+        PrefUtils.setBoolean(LoginActivity.this, AppConst.IS_LOGIN_KEY,true);
+        PrefUtils.setString(LoginActivity.this,AppConst.USERNAME_KEY,etName.getText().toString());
         startActivity(new Intent(LoginActivity.this,MainActivity.class));
         finish();
     }

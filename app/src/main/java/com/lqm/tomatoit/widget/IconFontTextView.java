@@ -3,13 +3,12 @@ package com.lqm.tomatoit.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 /**
  * @user  lqm
  * @desc  使用IConFont TextView
  */
-public class IconFontTextView extends TextView {
+public class IconFontTextView extends android.support.v7.widget.AppCompatTextView {
 
     private Context mContext;
 

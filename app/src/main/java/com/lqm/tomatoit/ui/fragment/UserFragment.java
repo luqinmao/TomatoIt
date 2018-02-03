@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lqm.tomatoit.R;
+import com.lqm.tomatoit.app.AppConst;
 import com.lqm.tomatoit.ui.activity.AboutActivity;
 import com.lqm.tomatoit.ui.activity.CollectActivity;
 import com.lqm.tomatoit.ui.activity.LoginActivity;
@@ -53,11 +54,11 @@ public class UserFragment extends BaseFragment{
     @Override
     public void initView(View rootView) {
 
-        if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
+        if (PrefUtils.getBoolean(getContext(), AppConst.IS_LOGIN_KEY,false) == false){
             tvLogou.setText("点击登录");
             tvName.setText("暂未登录");
         }else{
-            tvName.setText(PrefUtils.getString(getContext(),"userName","暂未登录"));
+            tvName.setText(PrefUtils.getString(getContext(),AppConst.USERNAME_KEY,"暂未登录"));
             tvLogou.setText("退出登录");
         }
     }
@@ -66,7 +67,7 @@ public class UserFragment extends BaseFragment{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cv_collect:
-                if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
+                if (PrefUtils.getBoolean(getContext(),AppConst.IS_LOGIN_KEY,false) == false){
                     T.showShort(getContext(),"请先登录");
                 }else{
                     startActivity(new Intent(getActivity(),CollectActivity.class));
@@ -76,11 +77,11 @@ public class UserFragment extends BaseFragment{
                 startActivity(new Intent(getActivity(),AboutActivity.class));
                 break;
             case R.id.cv_logou:
-                if (PrefUtils.getBoolean(getContext(),"isLogin",false) == false){
+                if (PrefUtils.getBoolean(getContext(),AppConst.IS_LOGIN_KEY,false) == false){
                     startActivity(new Intent(getActivity(),LoginActivity.class));
                 }else{
                     //注销
-                    PrefUtils.setBoolean(getContext(),"isLogin",false);
+                    PrefUtils.setBoolean(getContext(),AppConst.IS_LOGIN_KEY,false);
                     T.showShort(getContext(),"已注销");
                     tvLogou.setText("点击登录");
                 }
