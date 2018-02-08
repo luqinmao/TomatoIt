@@ -1,7 +1,9 @@
 package com.lqm.tomatoit.ui.presenter;
 
 import com.lqm.tomatoit.api.WanService;
-import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.helper.rxjavahelper.RxObserver;
+import com.lqm.tomatoit.helper.rxjavahelper.RxResultHelper;
+import com.lqm.tomatoit.helper.rxjavahelper.RxSchedulersHelper;
 import com.lqm.tomatoit.model.pojo.HotKeyBean;
 import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.ui.base.BasePresenter;
@@ -9,17 +11,12 @@ import com.lqm.tomatoit.ui.view.SearchView;
 
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * user：lqm
  * desc：搜索
  */
 
-public class SearchPresenter extends BasePresenter<SearchView>{
+public class SearchPresenter extends BasePresenter<SearchView> {
 
 
     private int mCurrentPage;
@@ -27,29 +24,17 @@ public class SearchPresenter extends BasePresenter<SearchView>{
     //热门搜索
     public void getHotKeyData() {
         WanService.getHotKey()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<List<HotKeyBean>>>() {
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<List<HotKeyBean>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void _onNext(List<HotKeyBean> hotKeyBeans) {
+                        getView().getHotKeySuccess(hotKeyBeans);
                     }
 
                     @Override
-                    public void onNext(ResponseData<List<HotKeyBean>> responseData) {
-                        getView().getHotKeySuccess(responseData.getData());
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().getHotKeyFail(e.getMessage());
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void _onError(String errorMessage) {
+                        getView().getHotKeyFail(errorMessage);
                     }
                 });
     }
@@ -57,63 +42,39 @@ public class SearchPresenter extends BasePresenter<SearchView>{
     //搜索
     public void searchData(String key) {
         mCurrentPage = 0;
-        WanService.searchArticle(mCurrentPage,key)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<ResponseData<ArticleListVO>>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-
-                }
-
-                @Override
-                public void onNext(ResponseData<ArticleListVO> responseData) {
-                    if (responseData.getData() == null){
-                        getView().searchDataSuccess(null);
-                    }else{
-                        getView().searchDataSuccess(responseData.getData().getDatas());
+        WanService.searchArticle(mCurrentPage, key)
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<ArticleListVO>() {
+                    @Override
+                    public void _onNext(ArticleListVO articleListVO) {
+                        getView().searchDataSuccess(articleListVO.getDatas());
                     }
-                }
 
-                @Override
-                public void onError(Throwable e) {
-                    getView().searchDataFail(e.getMessage());
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
+                    @Override
+                    public void _onError(String errorMessage) {
+                        getView().searchDataFail(errorMessage);
+                    }
+                });
     }
 
     //加载更多
-    public void getMoreData(String key){
+    public void getMoreData(String key) {
         mCurrentPage += 1;
-        WanService.searchArticle(mCurrentPage,key)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+        WanService.searchArticle(mCurrentPage, key)
+            .compose(RxSchedulersHelper.io_main())
+            .compose(RxResultHelper.handleResult())
+            .subscribe(new RxObserver<ArticleListVO>() {
+                @Override
+                public void _onNext(ArticleListVO articleListVO) {
+                    getView().loadMoreDataSuccess(articleListVO.getDatas());
+                }
 
-                    }
-
-                    @Override
-                    public void onNext(ResponseData<ArticleListVO> responseData) {
-                        getView().loadMoreDataSuccess(responseData.getData().getDatas());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().loadMoreDataFail(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                @Override
+                public void _onError(String errorMessage) {
+                    getView().loadMoreDataFail(errorMessage);
+                }
+            });
     }
 
 }

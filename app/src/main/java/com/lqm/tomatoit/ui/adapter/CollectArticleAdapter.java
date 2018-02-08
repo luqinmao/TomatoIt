@@ -9,18 +9,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
-import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.helper.rxjavahelper.RxObserver;
+import com.lqm.tomatoit.helper.rxjavahelper.RxResultHelper;
+import com.lqm.tomatoit.helper.rxjavahelper.RxSchedulersHelper;
 import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.ui.activity.WebViewActivity;
 import com.lqm.tomatoit.util.T;
 import com.lqm.tomatoit.util.UIUtils;
 
 import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * user：lqm
@@ -66,17 +63,11 @@ public class CollectArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseVie
 
     private void unCollectArticler(int position, ArticleBean bean) {
         WanService.unCollectArticle(bean.getId(),bean.getOriginId(),true)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<ResponseData<String>>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-
-                }
-
-                @Override
-                public void onNext(ResponseData<String> responseData) {
-                    if (responseData.getErrorCode() == 0) {
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<String>() {
+                    @Override
+                    public void _onNext(String s) {
                         T.showShort(mContext, "取消收藏");
                         getData().remove(position);
                         if (position != 0){
@@ -84,22 +75,12 @@ public class CollectArticleAdapter extends BaseQuickAdapter<ArticleBean, BaseVie
                         }else{
                             notifyDataSetChanged();
                         }
-
-                    } else {
-                        T.showShort(mContext, responseData.getErrorMsg());
                     }
 
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    T.showShort(mContext, "取消收藏失败");
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
+                    @Override
+                    public void _onError(String errorMessage) {
+                        T.showShort(mContext, "取消收藏失败");
+                    }
+                });
     }
 }

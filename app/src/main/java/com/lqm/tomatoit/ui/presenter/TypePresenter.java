@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
-import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.helper.rxjavahelper.RxObserver;
+import com.lqm.tomatoit.helper.rxjavahelper.RxResultHelper;
+import com.lqm.tomatoit.helper.rxjavahelper.RxSchedulersHelper;
 import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.model.pojoVO.TypeTagVO;
 import com.lqm.tomatoit.ui.adapter.ArticleListAdapter;
@@ -20,11 +22,6 @@ import com.lqm.tomatoit.widget.AutoLinefeedLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * user：lqm
  * desc：分类
@@ -34,7 +31,7 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
     private FragmentActivity mActivity;
     private TypeView mTypeView;
-    private int mCurrentPage ;
+    private int mCurrentPage;
     private List<TypeTagVO> mTagDatas;
     private ArticleListAdapter mAdapter;
     private int mId;
@@ -51,33 +48,23 @@ public class TypePresenter extends BasePresenter<TypeView> {
     public void getTagData() {
         mTypeView = getView();
         WanService.getTypeTagData()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<ResponseData<List<TypeTagVO>>>() {
-                @Override
-                public void onSubscribe(Disposable d) {
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<List<TypeTagVO>>() {
+                    @Override
+                    public void _onNext(List<TypeTagVO> typeTagVOS) {
+                        mTagDatas = typeTagVOS;
+                        setTabUI();
+                        mTabSelect = 0;
+                        mTagSelect = 0;
+                        getServerData(mTagDatas.get(0).getChildren().get(0).getId());
+                    }
 
-                }
+                    @Override
+                    public void _onError(String errorMessage) {
 
-                @Override
-                public void onNext(ResponseData<List<TypeTagVO>> responseData) {
-                    mTagDatas = responseData.getData();
-                    setTabUI();
-                    mTabSelect = 0;
-                    mTagSelect = 0;
-                    getServerData(mTagDatas.get(0).getChildren().get(0).getId());
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
+                    }
+                });
     }
 
     //一级Tab
@@ -101,9 +88,9 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                if (llTag != null && llTag.getVisibility() == View.VISIBLE){
+                if (llTag != null && llTag.getVisibility() == View.VISIBLE) {
                     llTag.setVisibility(View.GONE);
-                }else{
+                } else {
                     setTagUI(tab.getPosition());
                 }
             }
@@ -116,9 +103,9 @@ public class TypePresenter extends BasePresenter<TypeView> {
         llTag = mTypeView.getTagLayout();
         llTag.setVisibility(View.VISIBLE);
         llTag.removeAllViews();
-        if (tagTvs == null){
+        if (tagTvs == null) {
             tagTvs = new ArrayList<>();
-        }else{
+        } else {
             tagTvs.clear();
         }
         for (int i = 0; i < mTagDatas.get(position).getChildren().size(); i++) {
@@ -145,10 +132,10 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
         //设置选中的tag背景
         for (int j = 0; j < tagTvs.size(); j++) {
-            if (position == mTabSelect && j == mTagSelect){
+            if (position == mTabSelect && j == mTagSelect) {
                 tagTvs.get(j).setTextColor(UIUtils.getColor(R.color.white));
                 tagTvs.get(j).setBackgroundResource(R.drawable.shape_tag_sel);
-            }else{
+            } else {
                 tagTvs.get(j).setTextColor(UIUtils.getColor(R.color.text0));
                 tagTvs.get(j).setBackgroundResource(R.drawable.shape_tag_nor);
             }
@@ -158,66 +145,43 @@ public class TypePresenter extends BasePresenter<TypeView> {
 
 
     //根据点击的标签获取数据
-    public void getServerData(int cid){
+    public void getServerData(int cid) {
         mCurrentPage = 0; //从第0页开始
-        mAdapter =  mTypeView.getAdapter();
-        WanService.getTypeDataById(mCurrentPage,cid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
+        mAdapter = mTypeView.getAdapter();
+        WanService.getTypeDataById(mCurrentPage, cid)
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<ArticleListVO>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseData<ArticleListVO> responseData) {
-                        if (responseData.getData().getDatas() != null){
-                            getView().getRefreshDataSuccess(responseData.getData().getDatas());
+                    public void _onNext(ArticleListVO articleListVO) {
+                        if (articleListVO.getDatas() != null) {
+                            getView().getRefreshDataSuccess(articleListVO.getDatas());
                             mTypeView.getTagLayout().setVisibility(View.GONE);
                         }
-
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        getView().getDataError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void _onError(String errorMessage) {
+                        getView().getDataError(errorMessage);
                     }
                 });
-
     }
 
     //加载下一页
     public void getMoreData() {
         mCurrentPage = mCurrentPage + 1;
-        WanService.getTypeDataById(mCurrentPage,mId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
+        WanService.getTypeDataById(mCurrentPage, mId)
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<ArticleListVO>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void _onNext(ArticleListVO articleListVO) {
+                        getView().getMoreDataSuccess(articleListVO.getDatas());
                     }
 
                     @Override
-                    public void onNext(ResponseData<ArticleListVO> responseData) {
-                        getView().getMoreDataSuccess(responseData.getData().getDatas());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().getDataError(e.getMessage());
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void _onError(String errorMessage) {
+                        getView().getDataError(errorMessage);
                     }
                 });
 

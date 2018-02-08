@@ -43,7 +43,7 @@
         <com.lqm.tomatoit.widget.DynamicWave
             android:id="@+id/dynamicWave"
             android:layout_width="match_parent"
-            android:layout_height="100px"
+            android:layout_height="60px"
             android:layout_alignBottom="@id/ll_user_info" />
 
     </RelativeLayout>

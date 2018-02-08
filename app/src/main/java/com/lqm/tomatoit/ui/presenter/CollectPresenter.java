@@ -1,15 +1,12 @@
 package com.lqm.tomatoit.ui.presenter;
 
 import com.lqm.tomatoit.api.WanService;
-import com.lqm.tomatoit.model.ResponseData;
+import com.lqm.tomatoit.helper.rxjavahelper.RxObserver;
+import com.lqm.tomatoit.helper.rxjavahelper.RxResultHelper;
+import com.lqm.tomatoit.helper.rxjavahelper.RxSchedulersHelper;
 import com.lqm.tomatoit.model.pojoVO.ArticleListVO;
 import com.lqm.tomatoit.ui.base.BasePresenter;
 import com.lqm.tomatoit.ui.view.CollectView;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * user：lqm
@@ -24,26 +21,21 @@ public class CollectPresenter extends BasePresenter<CollectView> {
     public void getRefreshData() {
         mCurrentPage = 0;
         WanService.getCollectData(mCurrentPage)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<ArticleListVO>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void _onNext(ArticleListVO articleListVO) {
+                        getView().onRefreshSuccess(articleListVO.getDatas());
                     }
 
                     @Override
-                    public void onNext(ResponseData<ArticleListVO> responseData) {
-                        getView().onRefreshSuccess(responseData.getData().getDatas());
+                    public void _onError(String errorMessage) {
+                        getView().onRefreshFail(errorMessage);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        getView().onRefreshFail(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
+                    public void _onComplete() {
                         getView().loadComplete();
                     }
                 });
@@ -54,26 +46,17 @@ public class CollectPresenter extends BasePresenter<CollectView> {
     public void getMoreData() {
         mCurrentPage += 1;
         WanService.getCollectData(mCurrentPage)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<ArticleListVO>>() {
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<ArticleListVO>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void _onNext(ArticleListVO articleListVO) {
+                        getView().onLoadMoreSuccess(articleListVO.getDatas());
                     }
 
                     @Override
-                    public void onNext(ResponseData<ArticleListVO> responseData) {
-                        getView().onLoadMoreSuccess(responseData.getData().getDatas());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().onLoadMoreFail(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
+                    public void _onError(String errorMessage) {
+                        getView().onLoadMoreFail(errorMessage);
                     }
                 });
     }

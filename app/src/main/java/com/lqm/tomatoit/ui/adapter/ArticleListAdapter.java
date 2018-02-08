@@ -11,6 +11,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.lqm.tomatoit.R;
 import com.lqm.tomatoit.api.WanService;
 import com.lqm.tomatoit.app.AppConst;
+import com.lqm.tomatoit.helper.rxjavahelper.RxObserver;
+import com.lqm.tomatoit.helper.rxjavahelper.RxResultHelper;
+import com.lqm.tomatoit.helper.rxjavahelper.RxSchedulersHelper;
 import com.lqm.tomatoit.model.ResponseData;
 import com.lqm.tomatoit.model.pojo.ArticleBean;
 import com.lqm.tomatoit.ui.activity.WebViewActivity;
@@ -122,35 +125,20 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
 
     private void unCollectArticler(ArticleBean bean, TextView tvCollect) {
         WanService.unCollectArticle(bean.getId(), bean.getOriginId(), false)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<String>>() {
+                .compose(RxSchedulersHelper.io_main())
+                .compose(RxResultHelper.handleResult())
+                .subscribe(new RxObserver<String>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void _onNext(String s) {
+                        T.showShort(mContext, "取消收藏");
+                        bean.setCollect(false);
+                        tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
+                        tvCollect.setTextColor(UIUtils.getColor(R.color.text3));
                     }
 
                     @Override
-                    public void onNext(ResponseData<String> responseData) {
-                        if (responseData.getErrorCode() == 0) {
-                            T.showShort(mContext, "取消收藏");
-                            bean.setCollect(false);
-                            tvCollect.setText(UIUtils.getString(R.string.ic_collect_nor));
-                            tvCollect.setTextColor(UIUtils.getColor(R.color.text3));
-                        } else {
-                            T.showShort(mContext, responseData.getErrorMsg());
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
+                    public void _onError(String errorMessage) {
                         T.showShort(mContext, "取消收藏失败");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }
