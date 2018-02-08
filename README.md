@@ -12,7 +12,7 @@
 
 ## 技术与框架 ##
 - okgo网络框架
-- rxjava
+- rxjava（增加适当的封装）
 - BRVAH
 - autolayout
 - 自适应图标IconFont
