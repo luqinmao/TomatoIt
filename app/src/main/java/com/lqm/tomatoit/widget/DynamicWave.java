@@ -7,7 +7,6 @@ import android.graphics.DrawFilter;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.os.Build;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -46,6 +45,8 @@ public class DynamicWave extends View {
 
     private int mTotalWidth, mTotalHeight;
 
+    private ScheduledExecutorService executorService; //用于延迟绘制
+
     /**
      * 原始波纹的y值
      */
@@ -83,6 +84,10 @@ public class DynamicWave extends View {
         // 设置画笔颜色
         mWavePaint.setColor(getResources().getColor(R.color.white));
         mDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+
+        //
+         executorService = Executors
+                .newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     @Override
@@ -137,10 +142,9 @@ public class DynamicWave extends View {
             mXThreeOffset = 0;
         }
 
-        // 引发view重绘，延迟233毫秒绘制
-        ScheduledExecutorService executorService = Executors
-                .newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+        // 引发view重绘，延迟233微秒绘制
         executorService.schedule(this::invalidateWrap, 233, TimeUnit.MICROSECONDS);
+
     }
 
     /**
