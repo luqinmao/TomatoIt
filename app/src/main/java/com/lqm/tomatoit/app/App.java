@@ -61,6 +61,7 @@ public class App extends Application {
         //log颜色级别，决定了log在控制台显示的颜色
         loggingInterceptor.setColorLevel(Level.INFO);
         builder.addInterceptor(loggingInterceptor);
+//        builder.addInterceptor(new TokenInterceptor());
 
         OkGo.getInstance()
                 .init(this)
